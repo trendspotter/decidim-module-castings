@@ -1,0 +1,17 @@
+---
+en:
+  activemodel:
+    attributes:
+      casting:
+  decidim:
+    admin:
+      actions:
+        add: Add
+        confirm_destroy: Confirm destroy
+        destroy: Destroy
+        edit: Edit
+  decidim:
+    castings:
+      admin:
+      menu:
+        castings: Comittee composition
