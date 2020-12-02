@@ -1,0 +1,55 @@
+<div class="card">
+  <div class="card-divider">
+    <h2 class="card-title flex--sbc">
+      <div>
+        <%= link_to t("decidim.castings.menu.castings"), castings_path %>
+        &gt;
+        <%= t "castings.form.title", scope: "decidim.castings.admin" %>
+
+        <a data-toggle="help-panel" class="label secondary">
+          <%= icon("info") %>
+          <%= t("actions.help", scope: "decidim.castings.admin") %>
+        </a>
+      </div>
+
+      <div class="flex--cc flex-gap--1">
+        <div id="js-other-actions-wrapper">
+          <%= link_to t("actions.back", scope: "decidim.castings.admin"), castings_path, class: "button hollow tiny button--simple" %>
+        </div>
+      </div>
+    </h2>
+  </div>
+
+  <div class="card-section">
+    <div id="help-panel" class="callout help-text hide" data-toggler=".hide">
+      <p><strong><%= t ".help_title" %></strong></p>
+      <%= t ".help_html" %>
+    </div>
+
+    <div class="row column">
+      <%= form.text_field :title, autofocus: true %>
+    </div>
+    <div class="row column">
+      <%= form.text_field :description %>
+    </div>
+    <div class="row column">
+      <%= form.number_field :amount_of_candidates %>
+    </div>
+    <div class="row column">
+      <%= label_tag "casting_source", t(".source.title") %>
+      <%= form.collection_radio_buttons :source,
+                                        [["file", t(".source.file")], ["database", t(".source.database")]],
+                                        :first,
+                                        :last,
+                                        {},
+                                        disabled: true %>
+    </div>
+    <div class="row column">
+      <%= form.upload :file, optional: false, accept: ".csv" %>
+    </div>
+    <div class="row column">
+      <%= form.check_box :file_first_row_is_a_header, disabled: true %>
+    </div>
+
+  </div>
+</div>

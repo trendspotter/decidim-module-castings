@@ -3,6 +3,26 @@ en:
   activemodel:
     attributes:
       casting:
+        statuses:
+          created: Created
+          importing: Importing
+          import_error: Import error
+          imported: Imported
+          draft: Draft
+          processing: Processing
+          processing_error: Processing error
+          processed: Processed
+        sources:
+          file: File upload
+          database: Users in database
+    errors:
+      models:
+        casting:
+          attributes:
+            amount_of_candidates:
+              invalid: 'invalid value, should be a number greater than 0'
+            file:
+              invalid_mime_type: 'Invalid file type. Accepted formats are: %{valid_mime_types}'
   decidim:
     admin:
       actions:
@@ -10,8 +30,45 @@ en:
         confirm_destroy: Confirm destroy
         destroy: Destroy
         edit: Edit
-  decidim:
     castings:
       admin:
+        actions:
+          back: Back
+          cancel: Cancel
+          confirm_duplicate: Are you sure you want to duplicate this casting?
+          duplicate: Duplicate
+          help: Help
+          new_casting: New casting
+          view: View
+
+        castings:
+          index:
+            no_records_html: <p>No castings available.</p> <p>Start by adding a casting from the "<a href="%{new_casting_link}">%{button_name}</a>" button.</p>
+            actions_title: Actions
+          new:
+            create: Create
+            title: Castings
+          form:
+            help_html: <p>A casting is an entity that holds the data about people, criterias and results of finding committee composition.</p>
+            help_title: What is a casting?
+            title: Casting
+            source:
+              title: Source
+              file: File upload
+              database: Users in database
+          create:
+            error: Error creating casting.
+            success: Casting successfully created.
+
+        models:
+          castings:
+            fields:
+              title: Title
+              author: Author
+              status: Status
+              created_at: Created At
+
+        titles:
+          castings: Castings
       menu:
         castings: Comittee composition

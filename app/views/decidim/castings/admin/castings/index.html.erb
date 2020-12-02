@@ -1,0 +1,72 @@
+<div class="card" id="castings">
+  <div class="card-divider">
+    <h2 class="card-title flex--sbc">
+      <div>
+        <%= t "decidim.castings.admin.titles.castings" %>
+      </div>
+
+      <div class="flex--cc flex-gap--1">
+        <div id="js-other-actions-wrapper">
+          <% if allowed_to? :create, :casting %>
+            <%= link_to t("actions.new_casting", scope: "decidim.castings.admin"), new_casting_path, class: "button tiny button--simple" %>
+          <% end %>
+        </div>
+      </div>
+    </h2>
+  </div>
+  <div class="card-section">
+    <% if @castings.count > 0 %>
+      <div class="table-scroll">
+        <table class="table-list">
+          <thead>
+          <tr>
+            <th><%= t("models.castings.fields.title", scope: "decidim.castings.admin") %></th>
+            <th><%= t("models.castings.fields.author", scope: "decidim.castings.admin") %></th>
+            <th><%= t("models.castings.fields.status", scope: "decidim.castings.admin") %></th>
+            <th><%= t("models.castings.fields.created_at", scope: "decidim.castings.admin") %></th>
+            <th class="actions"><%= t ".actions_title" %></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @castings.each do |casting| %>
+            <tr>
+              <td>
+                <% if allowed_to? :read, :casting %>
+                  <%= link_to casting.title, casting_path(casting) %><br/>
+                <% else %>
+                  <%= casting.title %>
+                <% end %>
+              </td>
+              <td><%= casting.author.name %></td>
+              <td><%= casting.status %></td>
+              <td><%= casting.created_at %></td>
+              <td class="table-list__actions">
+                <% if allowed_to? :read, :casting %>
+                  <%= icon_link_to "eye", casting_path(casting), t("actions.view", scope: "decidim.castings.admin"), class: "action-icon--show" %>
+                <% end %>
+
+                <% if allowed_to? :update, :casting, casting: casting %>
+                  <%= icon_link_to "pencil", edit_casting_path(casting), t("actions.configure", scope: "decidim.admin"), class: "action-icon--new" %>
+                <% end %>
+
+                <%# if allowed_to? :create, :casting %>
+                <%#= icon_link_to "fork", duplicate_casting_path(casting), t("actions.duplicate", scope: "decidim.castings.admin"), method: :post, class: "action-icon--new", data: {confirm: t("actions.confirm_duplicate", scope: "decidim.castings.admin") } %>
+                <%# end %>
+
+                <% if allowed_to? :destroy, :casting, casting: casting %>
+                  <%= icon_link_to "circle-x", casting_path(casting), t("actions.destroy", scope: "decidim.admin"), method: :delete, class: "action-icon--remove", data: {confirm: t("actions.confirm_destroy", scope: "decidim.admin")} %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <%= paginate @castings, theme: "decidim" %>
+      </div>
+    <% else %>
+      <div class="text-center">
+        <%= t ".no_records_html", new_casting_link: new_casting_path, button_name: t("decidim.castings.admin.actions.new_casting") %>
+      </div>
+    <% end %>
+  </div>
+</div>

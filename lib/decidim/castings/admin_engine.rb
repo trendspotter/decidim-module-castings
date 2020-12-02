@@ -30,7 +30,7 @@ module Decidim
           menu.item I18n.t("menu.castings", scope: "decidim.castings"),
                     decidim_admin_castings.castings_path,
                     icon_name: "people",
-                    position: 8.1,
+                    position: 7.1,
                     active: :inclusive,
                     if: allowed_to?(:update, :organization, organization: current_organization)
         end
