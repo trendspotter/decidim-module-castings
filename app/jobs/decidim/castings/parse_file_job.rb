@@ -14,12 +14,57 @@ module Decidim
         casting.update_columns(status: Decidim::Casting.statuses[:importing], status_errors: nil)
 
         begin
-          # TODO: parse file and compute statistics
+          first_row = CSV.foreach(casting.file.path, headers: true, header_converters: :symbol).first
+          headers = first_row.headers.dup
+          id_header = headers.shift
+          _ids = {}
+          _stats = {
+            total_rows: 0
+          }
+          _attrs = {}
+          headers.each {|h| _attrs[h] = {}}
 
-          casting.update_columns(status: Decidim::Casting.statuses[:imported], status_errors: nil)
+          CSV.foreach(casting.file.path, headers: true, header_converters: :symbol).with_index(2) do |row, i|
+            id = row[id_header]
+            errors = []
+
+            errors << "ID in line #{i} is missing" if id.blank?
+            errors << "ID in line #{i} is not uniq: #{id}" if _ids[id].present?
+            errors << "Line #{i} contains empty values" if _attrs.any?(&:blank?)
+
+            if errors.present?
+              set_error(casting, errors)
+              return
+            end
+
+            _ids[id] = i
+            headers.each do |header|
+              value = row[header]
+              _attrs[header][value] = 0 if _attrs[header][value].blank?
+              _attrs[header][value] += 1
+            end
+          end
+
+          casting.update_columns(
+            status: Decidim::Casting.statuses[:imported],
+            status_errors: nil,
+            import_statistics: {
+              total_rows: _ids.keys.count,
+              attributes: _attrs
+            }
+          )
         rescue Exception => e
-          casting.update_columns(status: Decidim::Casting.statuses[:import_error], status_errors: {message: e.message})
+          set_error(casting, [e.message])
         end
+      end
+
+      private
+
+      def set_error(casting, errors)
+        casting.update_columns(status: Decidim::Casting.statuses[:import_error], status_errors: {
+          message: 'Error parsing file',
+          errors: errors
+        })
       end
 
     end

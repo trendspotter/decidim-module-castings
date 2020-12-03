@@ -20,6 +20,9 @@ module Decidim
         validates :amount_of_candidates, numericality: true
         validate :valid_amount_of_candidates?
         validates :file, presence: true, unless: :persisted?
+        validates :file,
+                  file_size: {less_than_or_equal_to: ->(_r) {Decidim.maximum_attachment_size}},
+                  file_content_type: {allow: ["text/csv"]}
 
         protected
 

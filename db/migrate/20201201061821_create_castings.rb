@@ -16,7 +16,10 @@ class CreateCastings < ActiveRecord::Migration[5.2]
       t.string :content_type, null: false
       t.string :file_size, null: false
       t.boolean :file_first_row_is_a_header, null: false, default: true
-      t.jsonb :file_statistics
+      t.datetime :imported_at
+      t.jsonb :import_statistics
+      t.jsonb :selection_criteria
+      t.integer :number_of_trials
 
       t.timestamps
 

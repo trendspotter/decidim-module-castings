@@ -50,7 +50,7 @@ module Decidim
     def parse_file
       return unless file_source?
 
-      puts '------------------------>>> schedule parse file'
+      Decidim::Castings::ParseFileJob.set(wait: 5.seconds).perform_later(self.id)
     end
 
   end
