@@ -42,7 +42,7 @@ module Decidim
             title: form.title,
             description: form.description,
             amount_of_candidates: form.amount_of_candidates,
-            source: form.source.present? ? form.source : Decidim::Casting.sources[:file],
+            data_source: form.data_source.present? ? form.data_source : Decidim::Casting.data_sources[:file],
             file: form.file,
             file_first_row_is_a_header: form.file_first_row_is_a_header || true,
             status: Decidim::Casting.statuses[:created]

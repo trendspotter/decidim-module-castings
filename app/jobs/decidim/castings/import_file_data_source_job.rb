@@ -3,7 +3,7 @@ require 'csv'
 
 module Decidim
   module Castings
-    class ParseFileJob < ApplicationJob
+    class ImportFileDataSourceJob < ApplicationJob
       queue_as :default
 
       def perform(casting_id)
@@ -48,7 +48,8 @@ module Decidim
           casting.update_columns(
             status: Decidim::Casting.statuses[:imported],
             status_errors: nil,
-            import_statistics: {
+            data_source_imported_at: DateTime.now,
+            data_source_statistics: {
               total_rows: _ids.keys.count,
               attributes: _attrs
             }

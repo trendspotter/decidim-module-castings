@@ -15,7 +15,7 @@ module Decidim
       processed: 'processed'
     }, _suffix: true
 
-    enum source: {
+    enum data_source: {
       file: 'file',
       database: 'database'
     }, _suffix: true
@@ -24,7 +24,7 @@ module Decidim
                foreign_key: "decidim_organization_id",
                class_name: "Decidim::Organization"
 
-    validates :file, :content_type, presence: true
+    validates :file, :file_content_type, presence: true
     validates :file, file_size: {less_than_or_equal_to: ->(_attachment) {Decidim.maximum_attachment_size}}
     mount_uploader :file, Decidim::CastingUploader
 
@@ -35,7 +35,7 @@ module Decidim
     # Returns String.
     delegate :url, to: :file
 
-    after_create :parse_file, if: ->(c) {c.file_source?}
+    after_create :import_file_data_source, if: ->(c) {c.file_data_source?}
 
 
     # Which kind of file this is.
@@ -47,10 +47,10 @@ module Decidim
 
     private
 
-    def parse_file
-      return unless file_source?
+    def import_file_data_source
+      return unless file_data_source?
 
-      Decidim::Castings::ParseFileJob.set(wait: 5.seconds).perform_later(self.id)
+      Decidim::Castings::ImportFileDataSourceJob.set(wait: 5.seconds).perform_later(self.id)
     end
 
   end

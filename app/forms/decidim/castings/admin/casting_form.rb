@@ -11,7 +11,7 @@ module Decidim
         attribute :title, String
         attribute :description, String
         attribute :amount_of_candidates, Integer
-        attribute :source, String
+        attribute :data_source, String
 
         attribute :file
         attribute :file_first_row_is_a_header, Boolean

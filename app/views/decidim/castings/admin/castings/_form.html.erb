@@ -36,9 +36,9 @@
       <%= form.number_field :amount_of_candidates %>
     </div>
     <div class="row column">
-      <%= label_tag "casting_source", t(".source.title") %>
-      <%= form.collection_radio_buttons :source,
-                                        [["file", t(".source.file")], ["database", t(".source.database")]],
+      <%= label_tag "casting_data_source", t(".data_source_title") %>
+      <%= form.collection_radio_buttons :data_source,
+                                        Decidim::Casting.data_sources.values.map{|ds| [ds, t(ds, scope: "activemodel.attributes.casting.data_sources")]},
                                         :first,
                                         :last,
                                         {},

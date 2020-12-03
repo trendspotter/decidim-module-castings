@@ -12,7 +12,7 @@ en:
           processing: Processing
           processing_error: Processing error
           processed: Processed
-        sources:
+        data_sources:
           file: File upload
           database: Users in database
     errors:
@@ -52,10 +52,7 @@ en:
             help_html: <p>A casting is an entity that holds the data about people, criterias and results of finding committee composition.</p>
             help_title: What is a casting?
             title: Casting
-            source:
-              title: Source
-              file: File upload
-              database: Users in database
+            data_source_title: Source
           create:
             error: Error creating casting.
             success: Casting successfully created.

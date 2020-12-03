@@ -10,16 +10,26 @@ class CreateCastings < ActiveRecord::Migration[5.2]
       t.text :description
       t.string :status, null: false, default: 'created'
       t.jsonb :status_errors
-      t.integer :amount_of_candidates, null: false, default: 0
-      t.string :source, null: false, default: 'file'
+
+      # step 1 - data source
+      t.string :data_source, null: false, default: 'file'
+      t.datetime :data_source_imported_at
       t.string :file, null: false
-      t.string :content_type, null: false
+      t.string :file_content_type, null: false
       t.string :file_size, null: false
       t.boolean :file_first_row_is_a_header, null: false, default: true
-      t.datetime :imported_at
-      t.jsonb :import_statistics
+      t.jsonb :data_source_statistics
+
+      # step 2 - attributes mapping
+      t.jsonb :attributes_mapping
+
+      # step 3 - selection criteria
+      t.integer :amount_of_candidates, null: false, default: 0
       t.jsonb :selection_criteria
+
+      # step 4 - run the process
       t.integer :number_of_trials
+      t.jsonb :processing_errors
 
       t.timestamps
 
