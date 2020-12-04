@@ -36,6 +36,16 @@ module Decidim
           end
         end
 
+        def show
+          enforce_permission_to :read, :casting
+          case casting.status
+            when Decidim::Casting.statuses[:created], Decidim::Casting.statuses[:importing]
+              render :show_importing
+            else
+              render :show
+          end
+        end
+
         private
 
         def castings

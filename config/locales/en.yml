@@ -40,6 +40,7 @@ en:
           help: Help
           new_casting: New casting
           view: View
+          refresh_page: Refresh page
 
         castings:
           index:
@@ -56,6 +57,9 @@ en:
           create:
             error: Error creating casting.
             success: Casting successfully created.
+          show_importing:
+            title: We're currently importing the data and computing its statistics.
+            refresh_page_title: Please refresh the page in a few seconds.
 
         models:
           castings:
