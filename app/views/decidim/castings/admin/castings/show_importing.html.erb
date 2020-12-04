@@ -15,20 +15,36 @@
     </h2>
   </div>
 
-  <div class="card-section">
-    <div class="row column text-center">
-      <h2>
-        <%= t(".title") %>
-      </h2>
-      <%= image_tag("data_processing.svg", alt: "Importing Data") %>
+  <% if @casting.import_error_status? %>
+    <div class="card-section">
+      <div class="row column text-center">
+        <h2>
+          <%= t(".error_title") %>
+        </h2>
+        <h3 class="is-invalid-label">
+          <%= @casting.status_errors.dig('message') %>
+        </h3>
+        <% (@casting.status_errors.dig('errors') || []).each do |error| %>
+          <p class="is-invalid-label"><%= error %></p>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <div class="card-section">
-    <div class="row column text-center">
-      <h3>
-        <%= t(".refresh_page_title") %>
-      </h3>
-      <%= link_to t("actions.refresh_page", scope: "decidim.castings.admin"), "", class: "button button--simple" %>
+  <% else %>
+    <div class="card-section">
+      <div class="row column text-center">
+        <h2>
+          <%= t(".title") %>
+        </h2>
+        <%= image_tag("data_processing.svg", alt: "Importing Data") %>
+      </div>
     </div>
-  </div>
+    <div class="card-section">
+      <div class="row column text-center">
+        <h3>
+          <%= t(".refresh_page_title") %>
+        </h3>
+        <%= link_to t("actions.refresh_page", scope: "decidim.castings.admin"), "", class: "button button--simple" %>
+      </div>
+    </div>
+  <% end %>
 </div>

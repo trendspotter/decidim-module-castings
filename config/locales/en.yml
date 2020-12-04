@@ -60,6 +60,7 @@ en:
           show_importing:
             title: We're currently importing the data and computing its statistics.
             refresh_page_title: Please refresh the page in a few seconds.
+            error_title: Data importing failed, please check error(s) below.
 
         models:
           castings:
