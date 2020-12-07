@@ -25,6 +25,10 @@ module Decidim
         end
       end
 
+      initializer "decidim_castings.admin_assets" do |app|
+        app.config.assets.precompile += %w(castings_admin_manifest.js)
+      end
+
       initializer "decidim_castings.admin_menu" do
         Decidim.menu :admin_menu do |menu|
           menu.item I18n.t("menu.castings", scope: "decidim.castings"),

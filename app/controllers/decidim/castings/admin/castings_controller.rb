@@ -4,6 +4,7 @@ module Decidim
   module Castings
     module Admin
       class CastingsController < Castings::Admin::ApplicationController
+        helper_method :charts_data_presenter
 
         def index
           enforce_permission_to :read, :casting
@@ -38,11 +39,10 @@ module Decidim
 
         def show
           enforce_permission_to :read, :casting
-          case casting.status
-            when Decidim::Casting.statuses[:created], Decidim::Casting.statuses[:importing]
-              render :show_importing
-            else
-              render :show
+          if casting.created_status? || casting.importing_status? || casting.import_error_status?
+            render :show_importing
+          else
+            render :show
           end
         end
 
@@ -55,6 +55,11 @@ module Decidim
         def casting
           @casting ||= Decidim::Casting.find(params[:id])
         end
+
+        def charts_data_presenter
+          @charts_data_presenter ||= Decidim::Castings::Admin::ChartsDataPresenter.new(casting: casting)
+        end
+
       end
     end
   end

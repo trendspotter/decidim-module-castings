@@ -57,10 +57,20 @@ en:
           create:
             error: Error creating casting.
             success: Casting successfully created.
+          menu:
+            data_source: Data source
+            selection_criteria: Selection criteria
+            results: Results
           show_importing:
             title: We're currently importing the data and computing its statistics.
             refresh_page_title: Please refresh the page in a few seconds.
             error_title: Data importing failed, please check error(s) below.
+          show:
+            data_statistics: Data statistics
+            file_name: Original file
+            download: Download
+            imported_at: Last imported at
+            participants: Participants
 
         models:
           castings:

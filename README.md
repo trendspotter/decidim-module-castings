@@ -22,6 +22,11 @@ $ bundle exec rails db:migrate
 
 To keep the gem up to date, you can use the commands above to also update it.
 
+Add js tags to the `app/views/layouts/decidim/admin/_header.html.erb`:
+```
+<%= javascript_include_tag "https://cdn.jsdelivr.net/npm/chart.js@2.9.3" %>
+<%= javascript_include_tag "https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0" %>
+```
 
 ## License
 
