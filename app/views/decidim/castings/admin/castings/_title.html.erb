@@ -1,0 +1,21 @@
+<div class="card-divider">
+  <h2 class="card-title flex--sbc">
+    <div>
+      <%= link_to t("decidim.castings.menu.castings"), castings_path %>
+      &gt;
+      <%= @casting.title %>
+    </div>
+
+    <div class="flex--cc flex-gap--1">
+      <div id="js-other-actions-wrapper">
+        <%= link_to t("actions.back", scope: "decidim.castings.admin"), castings_path, class: "button hollow tiny button--simple" %>
+        <% if params[:action] == 'selection_criteria' %>
+          <%= link_to t("actions.edit", scope: "decidim.castings.admin"), castings_path, class: "button tiny button--simple" %>
+          <% if @casting.ready_status? %>
+            <%= link_to t("actions.generate", scope: "decidim.castings.admin"), castings_path, class: "button tiny button--simple" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </h2>
+</div>

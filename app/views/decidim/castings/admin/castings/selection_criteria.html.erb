@@ -1,0 +1,49 @@
+<div class="card castings">
+  <%= render partial: "title" %>
+  <%= render partial: "menu_buttons" %>
+
+  <div class="card-section">
+    <div class="row column">
+      <div class="grid-x grid-margin-x">
+        <div class="cell small-10">
+          <h1><%= t(".title") %></h1>
+          <p><%= t(".description") %></p>
+
+          <div class="selection-criteria-list">
+            <% (@casting.selection_criteria || {}).each do |key, value| %>
+              <div id="<%= key %>" class="card with-border">
+                <div class="card-section">
+                  <div class="row column">
+                    <h2><%= key %></h2>
+                    <div class="grid-x grid-margin-x">
+                      <% value.each do |k, v| %>
+                        <div class="cell small-2 text-right">
+                          <%= k %>
+                        </div>
+                        <div class="cell small-10">
+                          <%= v || '-' %>
+                        </div>
+                      <% end %>
+                    </div>
+                    <br/>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+        </div>
+        <div class="cell small-2 selection-criteria-index">
+          <h2><%= t(".index_title") %></h2>
+          <ul>
+            <% (@casting.selection_criteria || {}).keys.each do |key| %>
+              <li>
+                <%= link_to key, "##{key}" %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

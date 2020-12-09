@@ -46,6 +46,15 @@ module Decidim
           end
         end
 
+        def selection_criteria
+          enforce_permission_to :read, :casting
+          if casting.imported_status?
+            render :selection_criteria
+          else
+            redirect_to casting_path(casting)
+          end
+        end
+
         private
 
         def castings

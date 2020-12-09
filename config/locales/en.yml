@@ -37,10 +37,12 @@ en:
           cancel: Cancel
           confirm_duplicate: Are you sure you want to duplicate this casting?
           duplicate: Duplicate
+          edit: Edit
+          generate: Generate
           help: Help
           new_casting: New casting
-          view: View
           refresh_page: Refresh page
+          view: View
 
         castings:
           index:
@@ -66,11 +68,15 @@ en:
             refresh_page_title: Please refresh the page in a few seconds.
             error_title: Data importing failed, please check error(s) below.
           show:
-            data_statistics: Data statistics
+            title: Data statistics
             file_name: Original file
             download: Download
             imported_at: Last imported at
             participants: Participants
+          selection_criteria:
+            title: Selection criteria
+            description: List of the criteria used to compute the needed representation.
+            index_title: Criteria index
 
         models:
           castings:

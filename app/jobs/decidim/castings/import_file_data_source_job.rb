@@ -18,11 +18,9 @@ module Decidim
           headers = first_row.headers.dup
           id_header = headers.shift
           _ids = {}
-          _stats = {
-            total_rows: 0
-          }
-          _attrs = {}
-          headers.each {|h| _attrs[h] = {}}
+          _stats = {}
+          _selection_criteria = {}
+          headers.each {|h| _stats[h] = {}; _selection_criteria[h] = {}}
 
           CSV.foreach(casting.file.path, headers: true, header_converters: :symbol).with_index(2) do |row, i|
             id = row[id_header]
@@ -30,7 +28,7 @@ module Decidim
 
             errors << "ID in line #{i} is missing" if id.blank?
             errors << "ID in line #{i} is not uniq: #{id}" if _ids[id].present?
-            errors << "Line #{i} contains empty values" if _attrs.any?(&:blank?)
+            errors << "Line #{i} contains empty values" if _stats.any?(&:blank?)
 
             if errors.present?
               set_error(casting, errors)
@@ -40,8 +38,11 @@ module Decidim
             _ids[id] = i
             headers.each do |header|
               value = row[header]
-              _attrs[header][value] = 0 if _attrs[header][value].blank?
-              _attrs[header][value] += 1
+              if _stats[header][value].blank?
+                _stats[header][value] = 0
+                _selection_criteria[header][value] = nil
+              end
+              _stats[header][value] += 1
             end
           end
 
@@ -51,8 +52,9 @@ module Decidim
             data_source_imported_at: DateTime.now,
             data_source_statistics: {
               total_rows: _ids.keys.count,
-              attributes: _attrs
-            }
+              attributes: _stats
+            },
+            selection_criteria: _selection_criteria
           )
         rescue Exception => e
           set_error(casting, [e.message])

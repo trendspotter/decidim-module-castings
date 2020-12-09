@@ -9,7 +9,7 @@ module Decidim
       importing: 'importing',
       import_error: 'import_error',
       imported: 'imported',
-      draft: 'draft',
+      ready: 'ready',
       processing: 'processing',
       processing_error: 'processing_error',
       processed: 'processed'

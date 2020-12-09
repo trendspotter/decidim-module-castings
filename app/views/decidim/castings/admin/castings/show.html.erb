@@ -1,33 +1,12 @@
-<div class="card">
-  <div class="card-divider">
-    <h2 class="card-title flex--sbc">
-      <div>
-        <%= link_to t("decidim.castings.menu.castings"), castings_path %>
-        &gt;
-        <%= @casting.title %>
-      </div>
-
-      <div class="flex--cc flex-gap--1">
-        <div id="js-other-actions-wrapper">
-          <%= link_to t("actions.back", scope: "decidim.castings.admin"), castings_path, class: "button hollow tiny button--simple" %>
-        </div>
-      </div>
-    </h2>
-  </div>
-
-  <div class="card-section">
-    <div class="row column">
-      <%= t("data_source", scope: 'decidim.castings.admin.castings.menu') %>
-      <%= t("selection_criteria", scope: 'decidim.castings.admin.castings.menu') %>
-      <%= t("results", scope: 'decidim.castings.admin.castings.menu') %>
-    </div>
-  </div>
+<div class="card castings">
+  <%= render partial: "title" %>
+  <%= render partial: "menu_buttons" %>
 
   <div class="card-section">
     <div class="row column">
       <div class="grid-x grid-margin-x">
         <div class="cell small-11">
-          <h2><%= t(".data_statistics") %></h2>
+          <h1><%= t(".title") %></h1>
           <p>
             <b><%= t(".file_name") %>:</b>
             <%= @casting[:file] %>
@@ -51,9 +30,9 @@
     <div class="row column">
       <div class="grid-x grid-margin-x data-statistic-charts">
         <% charts_data_presenter.statistics_charts.each do |chart_data| %>
-          <div class="cell small-6" style="border: 2px solid #7acaf1; margin-bottom: 1rem">
+          <p class="cell small-6 with-border">
             <%= render partial: "data_source_statistics_chart", locals: { data: chart_data } %>
-          </div>
+          </p>
         <% end %>
       </div>
     </div>

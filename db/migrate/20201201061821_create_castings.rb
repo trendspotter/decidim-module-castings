@@ -29,7 +29,6 @@ class CreateCastings < ActiveRecord::Migration[5.2]
 
       # step 4 - run the process
       t.integer :number_of_trials
-      t.jsonb :processing_errors
 
       t.timestamps
 

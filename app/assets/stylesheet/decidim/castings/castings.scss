@@ -1,0 +1,23 @@
+$primary-color: #039be5;
+
+.castings {
+  .with-border {
+    border: 2px solid $primary-color;
+  }
+
+  .callout {
+    background-color: $primary-color;
+  }
+
+  .selection-criteria-list {
+    max-height: 550px;
+    overflow-y: auto;
+  }
+  .selection-criteria-index ul {
+    list-style: decimal;
+
+    //a {
+    //  color: $primary-color;
+    //}
+  }
+}

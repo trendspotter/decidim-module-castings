@@ -9,7 +9,12 @@ module Decidim
       paths["lib/tasks"] = nil
 
       routes do
-        resources :castings
+        resources :castings do
+          member do
+            get 'selection_criteria'
+            get 'results'
+          end
+        end
         root to: "castings#index"
       end
 
@@ -26,7 +31,7 @@ module Decidim
       end
 
       initializer "decidim_castings.admin_assets" do |app|
-        app.config.assets.precompile += %w(castings_admin_manifest.js)
+        app.config.assets.precompile += %w(decidim_castings_manifest.css)
       end
 
       initializer "decidim_castings.admin_menu" do
