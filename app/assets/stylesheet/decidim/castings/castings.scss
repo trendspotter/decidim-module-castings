@@ -1,6 +1,12 @@
 $primary-color: #039be5;
 
 .castings {
+  &.edit-selection-criteria {
+    .flash.callout.alert{
+      display: none;
+    }
+  }
+
   .with-border {
     border: 2px solid $primary-color;
   }
@@ -12,6 +18,14 @@ $primary-color: #039be5;
   .selection-criteria-list {
     max-height: 550px;
     overflow-y: auto;
+
+    input[type='number'] {
+      width: 100px;
+    }
+
+    .criteria-error.form-error {
+      margin-top: 0;
+    }
   }
   .selection-criteria-index ul {
     list-style: decimal;

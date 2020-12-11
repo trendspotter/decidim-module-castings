@@ -8,12 +8,19 @@
 
     <div class="flex--cc flex-gap--1">
       <div id="js-other-actions-wrapper">
-        <%= link_to t("actions.back", scope: "decidim.castings.admin"), castings_path, class: "button hollow tiny button--simple" %>
+        <% unless local_assigns[:skip_back_button] %>
+          <%= link_to t("actions.back", scope: "decidim.castings.admin"), castings_path, class: "button hollow tiny button--simple" %>
+        <% end %>
         <% if params[:action] == 'selection_criteria' %>
-          <%= link_to t("actions.edit", scope: "decidim.castings.admin"), castings_path, class: "button tiny button--simple" %>
+          <%= link_to t("actions.edit", scope: "decidim.castings.admin"), edit_selection_criteria_casting_path(@casting), class: "button tiny button--simple" %>
           <% if @casting.ready_status? %>
             <%= link_to t("actions.generate", scope: "decidim.castings.admin"), castings_path, class: "button tiny button--simple" %>
           <% end %>
+        <% end %>
+
+        <% if params[:action].include?('selection_criteria') && local_assigns[:form].present? %>
+          <%= link_to t("actions.cancel", scope: "decidim.castings.admin"), selection_criteria_casting_path(@casting), class: "button hollow tiny button--simple" %>
+          <%= form.submit t("actions.save", scope: "decidim.castings.admin"), class: "button tiny button--simple" %>
         <% end %>
       </div>
     </div>

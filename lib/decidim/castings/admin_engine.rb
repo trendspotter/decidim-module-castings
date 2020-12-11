@@ -12,6 +12,8 @@ module Decidim
         resources :castings do
           member do
             get 'selection_criteria'
+            get 'edit_selection_criteria'
+            patch 'update_selection_criteria'
             get 'results'
           end
         end

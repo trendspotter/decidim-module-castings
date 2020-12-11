@@ -6,10 +6,10 @@ module Decidim
     class ImportFileDataSourceJob < ApplicationJob
       queue_as :default
 
-      def perform(casting_id)
+      def perform(casting_id, force = false)
         casting = Decidim::Casting.find(casting_id)
 
-        return unless Decidim::Casting.statuses.values_at(:created, :import_error).include?(casting.status)
+        return if !force && !Decidim::Casting.statuses.values_at(:created, :importing_error).include?(casting.status)
 
         casting.update_columns(status: Decidim::Casting.statuses[:importing], status_errors: nil)
 
@@ -64,7 +64,7 @@ module Decidim
       private
 
       def set_error(casting, errors)
-        casting.update_columns(status: Decidim::Casting.statuses[:import_error], status_errors: {
+        casting.update_columns(status: Decidim::Casting.statuses[:importing_error], status_errors: {
           message: 'Error parsing file',
           errors: errors
         })

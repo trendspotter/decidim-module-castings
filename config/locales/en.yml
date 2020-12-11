@@ -6,9 +6,9 @@ en:
         statuses:
           created: Created
           importing: Importing
-          import_error: Import error
+          importing_error: Importing error
           imported: Imported
-          draft: Draft
+          ready: Ready to process
           processing: Processing
           processing_error: Processing error
           processed: Processed
@@ -23,6 +23,11 @@ en:
               invalid: 'invalid value, should be a number greater than 0'
             file:
               invalid_mime_type: 'Invalid file type. Accepted formats are: %{valid_mime_types}'
+            selection_criteria:
+              required: must exist
+              should_be_positive: should be a positive number greater than or equal to 0
+              sum_is_invalid: 'Sum of participants is invalid. Current sum: %{sum}'
+
   decidim:
     admin:
       actions:
@@ -33,6 +38,7 @@ en:
     castings:
       admin:
         actions:
+          action_not_available: This action is not available for a current status of the casting.
           back: Back
           cancel: Cancel
           confirm_duplicate: Are you sure you want to duplicate this casting?
@@ -42,6 +48,7 @@ en:
           help: Help
           new_casting: New casting
           refresh_page: Refresh page
+          save: Save
           view: View
 
         castings:
@@ -76,6 +83,13 @@ en:
           selection_criteria:
             title: Selection criteria
             description: List of the criteria used to compute the needed representation.
+            index_title: Criteria index
+            update:
+              error: Error updating casting selection criteria.
+              success: Casting selection criteria successfully updated.
+          edit_selection_criteria:
+            title: Selection criteria
+            description_html: List of the criteria used to compute the needed representation. For each attribute the sum of participants must be <b>%{amount_of_candidates}</b>.
             index_title: Criteria index
 
         models:

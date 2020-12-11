@@ -1,0 +1,66 @@
+<div class="card castings edit-selection-criteria">
+  <%= decidim_form_for(@form, {url: update_selection_criteria_casting_path(@casting), html: {class: "form"}}) do |f| %>
+    <%= render partial: "title", locals: {form: f, skip_back_button: true} %>
+    <%= render partial: "menu_buttons" %>
+
+    <div class="card-section">
+      <div class="row column">
+        <div class="grid-x grid-margin-x">
+          <div class="cell small-10">
+            <h1><%= t(".title") %></h1>
+            <p><%= t(".description_html", amount_of_candidates: @casting.amount_of_candidates) %></p>
+
+            <div class="selection-criteria-list">
+              <% (f.object.selection_criteria || {}).each do |key, value| %>
+                <% error = (@form.errors.details[:base] || []).find {|e| e[:key] == "selection_criteria_#{key}"} %>
+
+                <div id="<%= key %>" class="card with-border">
+                  <div class="card-section">
+                    <div class="row column">
+                      <h2 class="<%= error.present? ? "is-invalid-label" : "" %>">
+                        <%= key %>
+                      </h2>
+                      <% if error.present? %>
+                        <span class="criteria-error form-error is-visible" role="alert"><%= error[:error] %></span>
+                      <% end %>
+
+                      <div class="grid-x grid-margin-x">
+                        <% value.each do |k, v| %>
+                          <% e = (@form.errors.details[:base] || []).find {|e| e[:key] == "selection_criteria_#{key}_#{k}"} %>
+
+                          <div class="cell small-2 text-right">
+                            <%= label_tag "selection_criteria_#{key}_#{k}", k, class: e.present? ? "is-invalid-label" : "" %>
+                          </div>
+                          <div class="cell small-10">
+                            <%= number_field_tag "selection_criteria[#{key}][#{k}]", v, id: "selection_criteria_#{key}_#{k}", min: 0 %>
+                            <% if e.present? %>
+                              <span class="form-error is-visible" role="alert"><%= e[:error] %></span>
+                            <% end %>
+                          </div>
+                        <% end %>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+
+          </div>
+          <div class="cell small-2 selection-criteria-index">
+            <h2><%= t(".index_title") %></h2>
+            <ul>
+              <% (@casting.selection_criteria || {}).keys.each do |key| %>
+                <% error = (@form.errors.details[:base] || []).any? {|e| e[:key].include?("selection_criteria_#{key}")} %>
+                <li>
+                  <%= link_to key, "##{key}", class: error.present? ? "is-invalid-label" : "" %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <% end %>
+</div>

@@ -1,7 +1,7 @@
 <div class="card-section">
   <div class="row column">
-    <%= link_to t("data_source", scope: 'decidim.castings.admin.castings.menu'), casting_path(@casting), class: "button #{'clear' unless params[:action] == 'show'}" %>
-    <%= link_to t("selection_criteria", scope: 'decidim.castings.admin.castings.menu'), selection_criteria_casting_path(@casting), class: "button #{'clear' unless params[:action] == 'selection_criteria'}" %>
-    <%= link_to t("results", scope: 'decidim.castings.admin.castings.menu'), results_casting_path(@casting), class: "button #{'clear' unless params[:action] == 'results'}" %>
+    <%= link_to t("data_source", scope: 'decidim.castings.admin.castings.menu'), casting_path(@casting), class: "button #{params[:action] == 'show' ? '' : 'clear'}" %>
+    <%= link_to t("selection_criteria", scope: 'decidim.castings.admin.castings.menu'), selection_criteria_casting_path(@casting), class: "button #{params[:action].include?('selection_criteria') ? '' : 'clear'}" %>
+    <%= link_to t("results", scope: 'decidim.castings.admin.castings.menu'), results_casting_path(@casting), class: "button #{params[:action] == 'results' ? '' : 'clear'}" %>
   </div>
 </div>

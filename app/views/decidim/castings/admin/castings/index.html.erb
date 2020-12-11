@@ -38,7 +38,7 @@
                 <% end %>
               </td>
               <td><%= casting.author.name %></td>
-              <td><%= casting.status %></td>
+              <td><%= t(casting.status, scope: "activemodel.attributes.casting.statuses") %></td>
               <td><%= casting.created_at %></td>
               <td class="table-list__actions">
                 <% if allowed_to? :read, :casting %>

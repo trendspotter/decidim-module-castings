@@ -7,7 +7,7 @@ module Decidim
     enum status: {
       created: 'created',
       importing: 'importing',
-      import_error: 'import_error',
+      importing_error: 'importing_error',
       imported: 'imported',
       ready: 'ready',
       processing: 'processing',
