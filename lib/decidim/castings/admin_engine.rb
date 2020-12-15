@@ -33,7 +33,7 @@ module Decidim
       end
 
       initializer "decidim_castings.admin_assets" do |app|
-        app.config.assets.precompile += %w(decidim_castings_manifest.css)
+        app.config.assets.precompile += %w(decidim_castings_manifest.js decidim_castings_manifest.css)
       end
 
       initializer "decidim_castings.admin_menu" do
