@@ -11,8 +11,11 @@ $primary-color: #039be5;
     border: 2px solid $primary-color;
   }
 
-  .callout {
+  .total-participants-badge {
     background-color: $primary-color;
+    float: right;
+    height: 116px;
+    width: 116px;
   }
 
   .selection-criteria-list {

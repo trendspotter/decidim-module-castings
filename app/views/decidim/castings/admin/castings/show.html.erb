@@ -5,7 +5,7 @@
   <div class="card-section">
     <div class="row column">
       <div class="grid-x grid-margin-x">
-        <div class="cell small-11">
+        <div class="cell small-10">
           <h1><%= t(".title") %></h1>
           <p>
             <b><%= t(".file_name") %>:</b>
@@ -16,8 +16,8 @@
           </p>
           <p><b><%= t(".imported_at") %>:</b> <%= l @casting.data_source_imported_at, format: :short %></p>
         </div>
-        <div class="cell small-1 text-center">
-          <div class="callout callout--full">
+        <div class="cell small-2">
+          <div class="callout callout--full total-participants-badge">
             <div class="Select-loading-zone">
               <h1><%= @casting.data_source_statistics.dig('total_rows') %></h1>
               <p><%= t(".participants") %></p>
