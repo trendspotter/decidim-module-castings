@@ -46,6 +46,8 @@ module Decidim
             end
           end
 
+          Decidim::Castings::CreateCastingDataRowsJob.perform_now(casting.id)
+
           casting.update_columns(
             status: Decidim::Casting.statuses[:imported],
             status_errors: nil,

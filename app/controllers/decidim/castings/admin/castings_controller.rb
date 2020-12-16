@@ -6,7 +6,8 @@ module Decidim
       class CastingsController < Castings::Admin::ApplicationController
         helper_method :charts_data_presenter
 
-        before_action :verify_status_for_selection_criteria_actions, only: [:selection_criteria, :edit_selection_criteria, :update_selection_criteria]
+        before_action :verify_status_for_selection_criteria_actions, only: [:edit_selection_criteria, :update_selection_criteria]
+        before_action :verify_status_for_processing_action, only: [:start_processing]
 
         def index
           enforce_permission_to :read, :casting
@@ -50,6 +51,7 @@ module Decidim
 
         def selection_criteria
           enforce_permission_to :read, :casting
+          casting
           render :selection_criteria
         end
 
@@ -79,6 +81,35 @@ module Decidim
           end
         end
 
+        def start_processing
+          enforce_permission_to :update, :casting
+
+          StartCastingProcessing.call(casting) do
+            on(:ok) do
+              flash[:notice] = I18n.t("castings.start_processing.success", scope: "decidim.castings.admin")
+              redirect_to results_casting_path(casting)
+            end
+
+            on(:invalid) do |message|
+              flash.now[:alert] = I18n.t("castings.start_processing.error", scope: "decidim.castings.admin", message: message || '')
+              render action: "results_not_started"
+            end
+          end
+        end
+
+        def results
+          enforce_permission_to :read, :casting
+          if casting.processed_status?
+            @result = casting.result
+            render :results_processed
+          elsif casting.processing_scheduled_status? || casting.processing_status? || casting.processing_error_status?
+            @result = casting.result
+            render :results_processing
+          else
+            render :results_not_started
+          end
+        end
+
         private
 
         def castings
@@ -94,8 +125,15 @@ module Decidim
         end
 
         def verify_status_for_selection_criteria_actions
-          if casting.created_status? || casting.importing_status? || casting.importing_error_status?
-            flash[:alert] = t("actions.action_not_available", scope: "decidim.castings.admin")
+          unless casting.can_edit_selection_criteria?
+            flash[:alert] = t("action_not_available_in_current_status", scope: "decidim.castings.admin.messages")
+            redirect_to casting_path(casting)
+          end
+        end
+
+        def verify_status_for_processing_action
+          unless casting.can_start_processing?
+            flash[:alert] = t("action_not_available_in_current_status", scope: "decidim.castings.admin.messages")
             redirect_to casting_path(casting)
           end
         end

@@ -1,0 +1,10 @@
+<div class="card-section">
+  <div class="row column text-center">
+    <h3><%= t("messages.refresh_page_automatically_html", seconds: local_assigns[:seconds] || 30, scope: "decidim.castings.admin") %></h3>
+    <h3><%= t("messages.refresh_page_or", scope: "decidim.castings.admin") %></h3>
+    <h3><%= t("messages.refresh_page_manually", scope: "decidim.castings.admin") %></h3>
+    <%= link_to t("actions.refresh_page", scope: "decidim.castings.admin"), "", class: "button button--simple" %>
+  </div>
+</div>
+
+<%= javascript_include_tag "decidim/castings/auto_page_refresh_counter" %>

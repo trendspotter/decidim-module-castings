@@ -14,6 +14,7 @@ module Decidim
             get 'selection_criteria'
             get 'edit_selection_criteria'
             patch 'update_selection_criteria'
+            post 'start_processing'
             get 'results'
           end
         end

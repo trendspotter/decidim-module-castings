@@ -1,0 +1,26 @@
+<div class="card castings">
+  <%= render partial: "title" %>
+  <%= render partial: "menu_buttons" %>
+
+  <div class="card-section">
+    <div class="row column text-center">
+      <h2>
+        <%= t(".title") %>
+      </h2>
+      <%= image_tag("decidim/castings/not_started.svg", alt: "Importing Data") %>
+    </div>
+  </div>
+  <div class="card-section">
+    <div class="row column text-center">
+      <% if @casting.can_start_processing? %>
+        <%= link_to t("actions.start_processing", scope: "decidim.castings.admin"),
+                    start_processing_casting_path(@casting),
+                    method: :post,
+                    class: "button button--simple warning",
+                    data: {confirm: t("actions.confirm_start_processing", scope: "decidim.castings.admin")} %>
+      <% end %>
+    </div>
+  </div>
+  <div class="card-section">
+  </div>
+</div>

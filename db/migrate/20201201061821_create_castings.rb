@@ -20,15 +20,12 @@ class CreateCastings < ActiveRecord::Migration[5.2]
       t.boolean :file_first_row_is_a_header, null: false, default: true
       t.jsonb :data_source_statistics
 
-      # step 2 - attributes mapping
-      t.jsonb :attributes_mapping
+      # step 2 - data attributes mapping
+      t.jsonb :attrs_mapping
 
       # step 3 - selection criteria
       t.integer :amount_of_candidates, null: false, default: 0
       t.jsonb :selection_criteria
-
-      # step 4 - run the process
-      t.integer :number_of_trials
 
       t.timestamps
 

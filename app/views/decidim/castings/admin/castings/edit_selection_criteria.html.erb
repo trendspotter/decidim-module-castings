@@ -1,6 +1,6 @@
 <div class="card castings edit-selection-criteria">
   <%= decidim_form_for(@form, {url: update_selection_criteria_casting_path(@casting), html: {class: "form"}}) do |f| %>
-    <%= render partial: "title", locals: {form: f, skip_back_button: true} %>
+    <%= render partial: "title", locals: {form: f, skip_back_button: true, skip_start_processing_button: true} %>
     <%= render partial: "menu_buttons" %>
 
     <div class="card-section">

@@ -38,13 +38,13 @@ en:
     castings:
       admin:
         actions:
-          action_not_available: This action is not available for a current status of the casting.
           back: Back
           cancel: Cancel
           confirm_duplicate: Are you sure you want to duplicate this casting?
           duplicate: Duplicate
           edit: Edit
-          generate: Generate
+          confirm_start_processing: It will shedule the background job to process the casting data. Are you sure you want to start processing the casting?
+          start_processing: Start processing
           help: Help
           new_casting: New casting
           refresh_page: Refresh page
@@ -72,7 +72,6 @@ en:
             results: Results
           show_importing:
             title: We're currently importing the data and computing its statistics.
-            refresh_page_title: Please refresh the page in a few seconds.
             error_title: Data importing failed, please check error(s) below.
           show:
             title: Data statistics
@@ -91,6 +90,23 @@ en:
             title: Selection criteria
             description_html: List of the criteria used to compute the needed representation. For each attribute the sum of participants must be <b>%{amount_of_candidates}</b>.
             index_title: Criteria index
+          start_processing:
+            error: Error starting the casting processing. %{message}
+            success: Casting processing started successfully.
+          results_not_started:
+            title: No computations are running. Ensure the selection criteria are filled in to launch the randomisation toss.
+          results_processing:
+            title: We're currently processing the casting data to find results.
+            trial_number: Trial number
+            error_title: Data processing failed, please check error(s) below.
+          results_processed:
+            title: Casting results
+            run_number: Run
+            number_of_trials: Number of trials
+            candidates_file_name: Candidates file
+            substitutes_file_name: Substitutes file
+            selected_participants: Selected participants
+            download: Download
 
         models:
           castings:
@@ -99,6 +115,13 @@ en:
               author: Author
               status: Status
               created_at: Created At
+
+        messages:
+          refresh_page_automatically_html: Page will refresh automatically in <span id="page-refresh-counter" data-seconds="%{seconds}">%{seconds}</span> seconds
+          refresh_page_or: or
+          refresh_page_manually: Do that manually
+          action_not_available_in_current_status: This action is not available for a current status of the casting.
+          no_data_present_to_start_processing: No data present to start processing.
 
         titles:
           castings: Castings

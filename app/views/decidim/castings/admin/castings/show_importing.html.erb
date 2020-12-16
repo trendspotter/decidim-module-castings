@@ -1,34 +1,8 @@
-<div class="card">
-  <div class="card-divider">
-    <h2 class="card-title flex--sbc">
-      <div>
-        <%= link_to t("decidim.castings.menu.castings"), castings_path %>
-        &gt;
-        <%= @casting.title %>
-      </div>
-
-      <div class="flex--cc flex-gap--1">
-        <div id="js-other-actions-wrapper">
-          <%= link_to t("actions.back", scope: "decidim.castings.admin"), castings_path, class: "button hollow tiny button--simple" %>
-        </div>
-      </div>
-    </h2>
-  </div>
+<div class="card castings">
+  <%= render partial: "title" %>
 
   <% if @casting.importing_error_status? %>
-    <div class="card-section">
-      <div class="row column text-center">
-        <h2>
-          <%= t(".error_title") %>
-        </h2>
-        <h3 class="is-invalid-label">
-          <%= @casting.status_errors.dig('message') %>
-        </h3>
-        <% (@casting.status_errors.dig('errors') || []).each do |error| %>
-          <p class="is-invalid-label"><%= error %></p>
-        <% end %>
-      </div>
-    </div>
+    <%= render partial: "status_errors", locals: {title: t(".error_title")} %>
   <% else %>
     <div class="card-section">
       <div class="row column text-center">
@@ -38,13 +12,8 @@
         <%= image_tag("decidim/castings/data_processing.svg", alt: "Importing Data") %>
       </div>
     </div>
-    <div class="card-section">
-      <div class="row column text-center">
-        <h3>
-          <%= t(".refresh_page_title") %>
-        </h3>
-        <%= link_to t("actions.refresh_page", scope: "decidim.castings.admin"), "", class: "button button--simple" %>
-      </div>
-    </div>
+
+    <%= render partial: "page_refresh_counter", locals: {seconds: 10} %>
+
   <% end %>
 </div>

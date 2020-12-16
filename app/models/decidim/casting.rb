@@ -10,6 +10,7 @@ module Decidim
       importing_error: 'importing_error',
       imported: 'imported',
       ready: 'ready',
+      processing_scheduled: 'processing_scheduled',
       processing: 'processing',
       processing_error: 'processing_error',
       processed: 'processed'
@@ -23,6 +24,14 @@ module Decidim
     belongs_to :organization,
                foreign_key: "decidim_organization_id",
                class_name: "Decidim::Organization"
+    has_many :casting_data_rows,
+             foreign_key: "decidim_casting_id",
+             class_name: "Decidim::CastingDataRow",
+             dependent: :destroy
+    has_many :casting_results,
+             foreign_key: "decidim_casting_id",
+             class_name: "Decidim::CastingResult",
+             dependent: :destroy
 
     validates :file, :file_content_type, presence: true
     validates :file, file_size: {less_than_or_equal_to: ->(_attachment) {Decidim.maximum_attachment_size}}
@@ -30,19 +39,24 @@ module Decidim
 
     default_scope {order('created_at DESC')}
 
-    # The URL to download the file.
-    #
-    # Returns String.
     delegate :url, to: :file
 
     after_create :import_file_data_source, if: ->(c) {c.file_data_source?}
 
+    def result
+      casting_results.order(:run_number).last
+    end
 
-    # Which kind of file this is.
-    #
-    # Returns String.
     def file_type
       file.url&.split(".")&.last&.downcase
+    end
+
+    def can_edit_selection_criteria?
+      imported_status? || ready_status?
+    end
+
+    def can_start_processing?
+      ready_status? || processed_status?
     end
 
     private
