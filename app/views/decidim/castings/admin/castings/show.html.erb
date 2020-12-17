@@ -29,7 +29,7 @@
 
     <div class="row column">
       <div class="grid-x grid-margin-x data-statistic-charts">
-        <% charts_data_presenter.statistics_charts.each do |chart_data| %>
+        <% charts_data_presenter.data_source_statistics.each do |chart_data| %>
           <p class="cell small-6 with-border">
             <%= render partial: "data_source_statistics_chart", locals: { data: chart_data } %>
           </p>

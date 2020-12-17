@@ -6,7 +6,7 @@ module Decidim
       class ChartsDataPresenter < Rectify::Presenter
         attribute :casting, Decidim::Casting
 
-        def statistics_charts
+        def data_source_statistics
           data = []
           casting.data_source_statistics.dig('attributes').each do |k, v|
             data << {
@@ -16,6 +16,13 @@ module Decidim
               data: v.values,
             }
           end
+
+          data
+        end
+
+        def result_statistics
+          data = []
+          # TODO
 
           data
         end

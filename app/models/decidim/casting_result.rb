@@ -7,5 +7,10 @@ module Decidim
                foreign_key: "decidim_casting_id",
                class_name: "Decidim::Casting"
 
+
+    def has_results?
+      statistics.dig('total_rows').to_i > 0
+    end
+
   end
 end

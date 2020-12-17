@@ -9,41 +9,56 @@
           <h1><%= t(".title") %></h1>
           <p><b><%= t(".run_number") %>:</b> <%= @result.run_number %></p>
           <p><b><%= t(".number_of_trials") %>:</b> <%= @result.number_of_trials %></p>
-          <p>
-            <b><%= t(".candidates_file_name") %>:</b>
-            <%= @result[:candidates_file] %>
-            <%= link_to @result.candidates_file&.url, target: "_blank", rel: "noopener", title: t(".download") do %>
-              <%= icon "data-transfer-download", role: "img", aria_label: t(".download") %>
-            <% end %>
-          </p>
-          <p>
-            <b><%= t(".substitutes_file_name") %>:</b>
-            <%= @result[:substitutes_file] %>
-            <%= link_to @result.substitutes_file&.url, target: "_blank", rel: "noopener", title: t(".download") do %>
-              <%= icon "data-transfer-download", role: "img", aria_label: t(".download") %>
-            <% end %>
-          </p>
+          <% if @result.candidates_file.present? %>
+            <p>
+              <b><%= t(".candidates_file_name") %>:</b>
+              <%= @result[:candidates_file] %>
+              <%= link_to @result.candidates_file&.url, target: "_blank", rel: "noopener", title: t(".download") do %>
+                <%= icon "data-transfer-download", role: "img", aria_label: t(".download") %>
+              <% end %>
+            </p>
+          <% end %>
+          <% if @result.substitutes_file.present? %>
+            <p>
+              <b><%= t(".substitutes_file_name") %>:</b>
+              <%= @result[:substitutes_file] %>
+              <%= link_to @result.substitutes_file&.url, target: "_blank", rel: "noopener", title: t(".download") do %>
+                <%= icon "data-transfer-download", role: "img", aria_label: t(".download") %>
+              <% end %>
+            </p>
+          <% end %>
         </div>
-        <div class="cell small-2">
-          <div class="callout callout--full total-participants-badge">
-            <div class="Select-loading-zone">
-              <h1><%= @result.statistics.dig('total_rows') %></h1>
-              <p><%= t(".selected_participants") %></p>
+        <% if @result.has_results? %>
+          <div class="cell small-2">
+            <div class="callout callout--full total-participants-badge">
+              <div class="Select-loading-zone">
+                <h1><%= @result.statistics.dig('total_rows') %></h1>
+                <p><%= t(".selected_participants") %></p>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row column">
-      <div class="grid-x grid-margin-x data-statistic-charts">
-        <% charts_data_presenter.statistics_charts.each do |chart_data| %>
-          <p class="cell small-6 with-border">
-            <%= render partial: "data_source_statistics_chart", locals: { data: chart_data } %>
-          </p>
         <% end %>
       </div>
     </div>
+
+    <% if @result.has_results? %>
+      <div class="row column">
+        <div class="grid-x grid-margin-x data-statistic-charts">
+          <% charts_data_presenter.result_statistics.each do |chart_data| %>
+            <p class="cell small-6 with-border">
+              <%= render partial: "data_source_statistics_chart", locals: {data: chart_data} %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <div class="row column text-center">
+        <%= image_tag("decidim/castings/no_results.svg", alt: "No results found") %>
+        <h2>
+          <%= t(".no_results_title") %>
+        </h2>
+      </div>
+    <% end %>
 
   </div>
 </div>
