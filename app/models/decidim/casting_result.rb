@@ -9,7 +9,7 @@ module Decidim
 
 
     def has_results?
-      statistics.dig('total_rows').to_i > 0
+      statistics.dig('total_candidates').to_i > 0
     end
 
   end

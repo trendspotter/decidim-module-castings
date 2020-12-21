@@ -30,9 +30,9 @@
         </div>
         <% if @result.has_results? %>
           <div class="cell small-2">
-            <div class="callout callout--full total-participants-badge">
+            <div class="callout callout--full total-participants-badge pt-xs">
               <div class="Select-loading-zone">
-                <h1><%= @result.statistics.dig('total_rows') %></h1>
+                <h1><%= @result.statistics.dig('total_candidates') %></h1>
                 <p><%= t(".selected_participants") %></p>
               </div>
             </div>
@@ -44,9 +44,9 @@
     <% if @result.has_results? %>
       <div class="row column">
         <div class="grid-x grid-margin-x data-statistic-charts">
-          <% charts_data_presenter.result_statistics.each do |chart_data| %>
+          <% charts_data_presenter.result_statistics(@result).each do |chart_data| %>
             <p class="cell small-6 with-border">
-              <%= render partial: "data_source_statistics_chart", locals: {data: chart_data} %>
+              <%= render partial: "result_statistics_chart", locals: {data: chart_data} %>
             </p>
           <% end %>
         </div>

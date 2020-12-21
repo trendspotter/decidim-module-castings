@@ -9,6 +9,7 @@ en:
           importing_error: Importing error
           imported: Imported
           ready: Ready to process
+          processing_scheduled: Processing scheduled
           processing: Processing
           processing_error: Processing error
           processed: Processed
@@ -127,4 +128,4 @@ en:
         titles:
           castings: Castings
       menu:
-        castings: Comittee composition
+        castings: Committee composition

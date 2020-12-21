@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
 
   s.name = "decidim-castings"
   s.summary = "A decidim castings module"
-  s.description = "Provides the functionalities to get comittee composition."
+  s.description = "Provides the functionalities to get committee composition."
 
   s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
 

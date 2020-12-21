@@ -17,11 +17,12 @@ module Decidim
           run_number = (casting.casting_results.maximum(:run_number) || 0) + 1
           result = casting.casting_results.create!(
             run_number: run_number,
-            number_of_trials: 12345,
+            number_of_trials: 0,
             statistics: {}
           )
 
-          # TODO:
+          service = Decidim::Castings::CommitteeComposition.new(result)
+          service.call
 
           casting.processed_status!
 

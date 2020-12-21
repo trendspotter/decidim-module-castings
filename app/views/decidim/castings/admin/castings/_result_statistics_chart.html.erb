@@ -1,0 +1,75 @@
+<canvas id="<%= data[:attribute] %>" width="" height=""></canvas>
+<script>
+  var ctx = document.getElementById("<%= data[:attribute] %>").getContext('2d');
+  var chart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: {
+      labels: <%= raw data[:labels] %>,
+      datasets: [
+        {
+          backgroundColor: '#039be5',
+          barPercentage: 0.5,
+          minBarThickness: 20,
+          data: <%= raw data[:result_data] %>,
+          datalabels: {
+            anchor: 'end',
+            align: 'end',
+            color: 'black',
+            formatter: function (value, context) {
+              const total = context.dataset.data.reduce((a, b) => a + b, 0);
+              const percent = total > 0 ? parseFloat(value / total * 100).toFixed() : 0;
+              return ''.concat(value, ' (', percent, '%)')
+            }
+          }
+        },
+        {
+          barPercentage: 0.5,
+          minBarThickness: 20,
+          data: <%= raw data[:source_data] %>,
+          datalabels: {
+            anchor: 'end',
+            align: 'end',
+            color: 'black',
+            formatter: function (value, context) {
+              const total = context.dataset.data.reduce((a, b) => a + b, 0);
+              const percent = total > 0 ? parseFloat(value / total * 100).toFixed() : 0;
+              return ''.concat(value, ' (', percent, '%)')
+            }
+          }
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        fontSize: 16,
+        text: "<%= data[:title] %>"
+      },
+      scales: {
+        yAxes: [{
+          gridLines: {
+            drawOnChartArea: false
+          }
+        }],
+        xAxes: [{
+          gridLines: false,
+          ticks: {
+            min: 0
+          }
+        }]
+      },
+      layout: {
+        padding: {
+          left: 0,
+          right: 100,
+          top: 0,
+          bottom: 0
+        }
+      }
+    }
+  });
+</script>
