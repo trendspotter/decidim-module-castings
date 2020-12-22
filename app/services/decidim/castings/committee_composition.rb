@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'tempfile'
 
 module Decidim
   module Castings
@@ -7,9 +8,6 @@ module Decidim
 
       def initialize(casting_result)
         @result = casting_result
-        #
-        # @result = Decidim::CastingResult.find(7)
-        #
         init
       end
 
@@ -27,6 +25,8 @@ module Decidim
 
         find_candidates
         find_substitutes
+        save_candidates_file
+        save_substitutes_file
         save_stats
       end
 
@@ -98,18 +98,53 @@ module Decidim
       def find_substitutes
         return [] if @candidates.blank?
 
+        id_header = casting_file_headers.shift
+
         @candidates.each do |candidate|
           pool = @data_rows.where.not(id: @candidates.map(&:id))
 
           @casting.selection_criteria.keys.each do |attr|
-            pool = pool.where("attrs @> '#{{attr => candidate.attrs['age']}.to_json}'")
+            pool = pool.where("attrs @> '#{{attr => candidate.attrs[attr]}.to_json}'")
           end
           person = pool.order('RANDOM()').first
 
           if person.present?
-            person.attrs['__substitute_for'] = candidate.id
+            person.attrs['__substitute_for'] = candidate.attrs[id_header.to_s]
             @substitutes << person
           end
+        end
+      end
+
+      def save_candidates_file
+        _save_file(@candidates, :candidates)
+      end
+
+      def save_substitutes_file
+        _save_file(@substitutes, :substitutes)
+      end
+
+      def _save_file(rows, attr)
+        headers = casting_file_headers
+        headers << 'candidate ID' if attr == :substitutes
+
+        Tempfile.create(["result_#{@result.id}_#{attr}", ".csv"]) do |f|
+          f << headers.join(",") + "\n"
+
+          rows.each do |person|
+            if attr == :substitutes
+              row = person.raw_data.chomp
+              row += ",#{person.attrs['__substitute_for']}\n"
+            else
+              row = person.raw_data
+              row += "\n" unless row.ends_with?("\n")
+            end
+
+            f << row
+          end
+
+          f.flush
+          @result.send("#{attr}_file=", f)
+          @result.save!
         end
       end
 
@@ -140,6 +175,11 @@ module Decidim
         end
 
         _stats
+      end
+
+      def casting_file_headers
+        first_row = CSV.foreach(@casting.file.path, headers: true, header_converters: :symbol, col_sep: @casting.file_columns_separator).first
+        first_row.headers.dup
       end
     end
   end

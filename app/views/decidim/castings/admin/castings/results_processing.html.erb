@@ -23,8 +23,8 @@
         </h2>
       </div>
     </div>
-  <% end %>
 
-  <%= render partial: "page_refresh_counter" %>
+    <%= render partial: "page_refresh_counter", locals: {seconds: 10} %>
+  <% end %>
 
 </div>

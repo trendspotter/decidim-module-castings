@@ -21,6 +21,8 @@ module Decidim
       database: 'database'
     }, _suffix: true
 
+    CSV_FILE_COLUMNS_SEPARATORS = %w(, ;)
+
     belongs_to :organization,
                foreign_key: "decidim_organization_id",
                class_name: "Decidim::Organization"

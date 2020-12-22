@@ -15,6 +15,7 @@ module Decidim
 
         attribute :file
         attribute :file_first_row_is_a_header, Boolean
+        attribute :file_columns_separator, String
 
         validates :title, presence: true
         validates :amount_of_candidates, numericality: true

@@ -7,6 +7,8 @@ module Decidim
                foreign_key: "decidim_casting_id",
                class_name: "Decidim::Casting"
 
+    mount_uploader :candidates_file, Decidim::CastingResultFileUploader
+    mount_uploader :substitutes_file, Decidim::CastingResultFileUploader
 
     def has_results?
       statistics.dig('total_candidates').to_i > 0

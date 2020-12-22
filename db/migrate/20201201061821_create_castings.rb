@@ -18,6 +18,7 @@ class CreateCastings < ActiveRecord::Migration[5.2]
       t.string :file_content_type, null: false
       t.string :file_size, null: false
       t.boolean :file_first_row_is_a_header, null: false, default: true
+      t.string :file_columns_separator, null: false, default: ','
       t.jsonb :data_source_statistics
 
       # step 2 - data attributes mapping

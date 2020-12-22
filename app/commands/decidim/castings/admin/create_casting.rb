@@ -45,6 +45,7 @@ module Decidim
             data_source: form.data_source.present? ? form.data_source : Decidim::Casting.data_sources[:file],
             file: form.file,
             file_first_row_is_a_header: form.file_first_row_is_a_header || true,
+            file_columns_separator: form.file_columns_separator || ',',
             status: Decidim::Casting.statuses[:created]
           )
         end

@@ -48,6 +48,9 @@
       <%= form.upload :file, optional: false, accept: ".csv" %>
     </div>
     <div class="row column">
+      <%= form.select :file_columns_separator, Decidim::Casting::CSV_FILE_COLUMNS_SEPARATORS %>
+    </div>
+    <div class="row column">
       <%= form.check_box :file_first_row_is_a_header, disabled: true %>
     </div>
 
