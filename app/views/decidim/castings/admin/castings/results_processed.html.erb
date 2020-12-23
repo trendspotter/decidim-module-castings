@@ -9,7 +9,7 @@
           <h1><%= t(".title") %></h1>
             <b><%= t(".runs") %>:</b>
             <ul class="no-bullet-indented">
-              <% @casting.casting_results.each do |r| %>
+              <% @casting.casting_results.order(:run_number).each do |r| %>
                 <li>
                   <%= link_to t(".run_title", run_number: r.run_number, total_candidates: r.total_candidates, total_substitutes: r.total_substitutes),
                               results_casting_path(@casting, run: r.run_number),
