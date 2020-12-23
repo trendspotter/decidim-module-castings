@@ -21,10 +21,13 @@ module Decidim
             statistics: {}
           )
 
-          service = Decidim::Castings::CommitteeComposition.new(result)
-          service.call
+          Decidim::Castings::CreateCastingDataRowsJob.perform_now(casting.id)
+
+          Decidim::Castings::CommitteeComposition.new(result).call
 
           casting.processed_status!
+
+          casting.casting_data_rows.delete_all
 
         rescue Exception => e
           set_error(casting, [e.message])

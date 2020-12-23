@@ -3,22 +3,23 @@
 module Decidim
   module Castings
     module Admin
-      class CreateCasting < Rectify::Command
-        def initialize(form)
+      class UpdateCasting < Rectify::Command
+        def initialize(form, casting)
           @form = form
+          @casting = casting
         end
 
         def call
           return broadcast(:invalid) if form.invalid?
 
-          @casting = create_casting!
-
-          if @casting.persisted?
-            if @casting.file_data_source?
-              Decidim::Castings::ImportFileDataSourceJob.perform_later(@casting.id)
+          update_casting
+          if casting.valid?
+            casting.save!
+            if casting.file_data_source?
+              Decidim::Castings::ImportFileDataSourceJob.perform_later(casting.id)
             end
 
-            broadcast(:ok, @casting)
+            broadcast(:ok, casting)
           else
             broadcast(:invalid)
           end
@@ -26,22 +27,23 @@ module Decidim
 
         private
 
-        attr_reader :form
+        attr_reader :form, :casting
 
-        def create_casting!
-          Decidim::Casting.create!(
+        def update_casting
+          casting.update(
             organization: form.organization,
             author: current_user,
             title: form.title,
             description: form.description,
             amount_of_candidates: form.amount_of_candidates,
             data_source: form.data_source.present? ? form.data_source : Decidim::Casting.data_sources[:file],
-            file: form.file,
             file_first_row_is_a_header: form.file_first_row_is_a_header || true,
             file_columns_separator: form.file_columns_separator || ',',
             status: Decidim::Casting.statuses[:created]
           )
+          casting.update(file: form.file) if form.file.present?
         end
+
       end
     end
   end

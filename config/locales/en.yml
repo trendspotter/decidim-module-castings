@@ -43,7 +43,8 @@ en:
           cancel: Cancel
           confirm_duplicate: Are you sure you want to duplicate this casting?
           duplicate: Duplicate
-          edit: Edit
+          edit: Edit casting
+          edit_selection_criteria: Edit selection criteria
           confirm_start_processing: It will shedule the background job to process the casting data. Are you sure you want to start processing the casting?
           start_processing: Start processing
           help: Help
@@ -58,7 +59,7 @@ en:
             actions_title: Actions
           new:
             create: Create
-            title: Castings
+            title: New casting
           form:
             help_html: <p>A casting is an entity that holds the data about people, criterias and results of finding committee composition.</p>
             help_title: What is a casting?
@@ -67,6 +68,12 @@ en:
           create:
             error: Error creating casting.
             success: Casting successfully created.
+          edit:
+            save: Save
+            title: Edit casting
+          update:
+            error: Error updating casting.
+            success: Casting successfully updated.
           menu:
             data_source: Data source
             selection_criteria: Selection criteria
@@ -123,7 +130,6 @@ en:
           refresh_page_or: or
           refresh_page_manually: Do that manually
           action_not_available_in_current_status: This action is not available for a current status of the casting.
-          no_data_present_to_start_processing: No data present to start processing.
 
         titles:
           castings: Castings

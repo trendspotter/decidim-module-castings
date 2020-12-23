@@ -4,7 +4,7 @@
       <div>
         <%= link_to t("decidim.castings.menu.castings"), castings_path %>
         &gt;
-        <%= t "castings.form.title", scope: "decidim.castings.admin" %>
+        <%= title || t("castings.form.title", scope: "decidim.castings.admin") %>
 
         <a data-toggle="help-panel" class="label secondary">
           <%= icon("info") %>

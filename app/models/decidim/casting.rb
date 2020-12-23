@@ -43,8 +43,6 @@ module Decidim
 
     delegate :url, to: :file
 
-    after_create :import_file_data_source, if: ->(c) {c.file_data_source?}
-
     def result
       casting_results.order(:run_number).last
     end
@@ -53,20 +51,16 @@ module Decidim
       file.url&.split(".")&.last&.downcase
     end
 
+    def editable?
+      created_status? || importing_error_status? || imported_status? || ready_status?
+    end
+
     def can_edit_selection_criteria?
       imported_status? || ready_status?
     end
 
     def can_start_processing?
       ready_status? || processed_status?
-    end
-
-    private
-
-    def import_file_data_source
-      return unless file_data_source?
-
-      Decidim::Castings::ImportFileDataSourceJob.set(wait: 5.seconds).perform_later(self.id)
     end
 
   end

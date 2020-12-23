@@ -22,10 +22,7 @@ module Decidim
 
         def create
           enforce_permission_to :create, :casting
-          @form = form(CastingForm).from_params(
-            params,
-            current_organization: current_organization
-          )
+          @form = form(CastingForm).from_params(params, current_organization: current_organization)
 
           CreateCasting.call(@form) do
             on(:ok) do |c|
@@ -46,6 +43,28 @@ module Decidim
             render :show_importing
           else
             render :show
+          end
+        end
+
+        def edit
+          enforce_permission_to :update, :casting
+          @form = form(CastingForm).from_model(casting)
+        end
+
+        def update
+          enforce_permission_to :update, :casting
+          @form = form(CastingForm).from_params(params, current_organization: current_organization)
+
+          UpdateCasting.call(@form, casting) do
+            on(:ok) do |c|
+              flash[:notice] = I18n.t("castings.update.success", scope: "decidim.castings.admin")
+              redirect_to casting_path(c)
+            end
+
+            on(:invalid) do
+              flash.now[:alert] = I18n.t("castings.update.error", scope: "decidim.castings.admin")
+              render action: "edit"
+            end
           end
         end
 

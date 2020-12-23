@@ -4,9 +4,9 @@
       <%= title %>
     </h2>
     <h3 class="is-invalid-label">
-      <%= @casting.status_errors.dig('message') %>
+      <%= @casting.status_errors&.dig('message') %>
     </h3>
-    <% (@casting.status_errors.dig('errors') || []).each do |error| %>
+    <% (@casting.status_errors&.dig('errors') || []).each do |error| %>
       <p class="is-invalid-label"><%= error %></p>
     <% end %>
   </div>
