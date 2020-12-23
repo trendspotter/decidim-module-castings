@@ -127,7 +127,7 @@ module Decidim
         headers = casting_file_headers
         headers << 'candidate ID' if attr == :substitutes
 
-        Tempfile.create(["result_#{@result.id}_#{attr}", ".csv"]) do |f|
+        Tempfile.create(["casting_#{@casting.id}_run_#{@result.run_number}_#{attr}-", ".csv"]) do |f|
           f << headers.join(",") + "\n"
 
           rows.each do |person|

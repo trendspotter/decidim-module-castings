@@ -11,7 +11,15 @@ module Decidim
     mount_uploader :substitutes_file, Decidim::CastingResultFileUploader
 
     def has_results?
-      statistics.dig('total_candidates').to_i > 0
+      total_candidates.to_i > 0
+    end
+
+    def total_candidates
+      statistics&.dig('total_candidates').to_i
+    end
+
+    def total_substitutes
+      statistics&.dig('total_substitutes').to_i
     end
 
   end

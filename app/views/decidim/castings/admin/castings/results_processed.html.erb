@@ -7,7 +7,18 @@
       <div class="grid-x grid-margin-x">
         <div class="cell small-10">
           <h1><%= t(".title") %></h1>
-          <p><b><%= t(".run_number") %>:</b> <%= @result.run_number %></p>
+            <b><%= t(".runs") %>:</b>
+            <ul class="no-bullet-indented">
+              <% @casting.casting_results.each do |r| %>
+                <li>
+                  <%= link_to t(".run_title", run_number: r.run_number, total_candidates: r.total_candidates, total_substitutes: r.total_substitutes),
+                              results_casting_path(@casting, run: r.run_number),
+                              class: "button tiny button--simple #{r.id == @result.id ? '' : 'hollow'}"
+                  %>
+                </li>
+              <% end %>
+            </ul>
+
           <p><b><%= t(".number_of_trials") %>:</b> <%= @result.number_of_trials %></p>
           <% if @result.candidates_file.present? %>
             <p>
