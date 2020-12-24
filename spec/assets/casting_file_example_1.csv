@@ -1,0 +1,13 @@
+ID,cat_gender,cat_age,town,cat_school_grade
+1,Homme,3,Evere,3
+2,Homme,4,Evere,3
+3,Homme,4,Forest,3
+4,Homme,5,Forest,2
+5,Homme,2,Etterbeek,4
+6,Femme,3,Etterbeek,4
+7,Femme,4,Bruxelles,2
+8,Femme,3,Bruxelles,2
+9,Femme,2,Uccle,3
+10,Femme,3,Uccle,3
+11,Homme,2,Auderghem,3
+12,Femme,3,Auderghem,2

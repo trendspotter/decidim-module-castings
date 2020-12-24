@@ -47,7 +47,7 @@ module Decidim
               end
             end
 
-            person = pool.where("attrs @> '#{{cc[:attr] => cc[:value]}.to_json}'").order('RANDOM()').first
+            person = pool.where("attrs @> '#{{cc[:attr] => cc[:value]}.to_json}'").order(Arel.sql('RANDOM()')).first
             if person.present?
               @candidates << person
               person.attrs.each do |k, v|
@@ -106,7 +106,7 @@ module Decidim
           @casting.selection_criteria.keys.each do |attr|
             pool = pool.where("attrs @> '#{{attr => candidate.attrs[attr]}.to_json}'")
           end
-          person = pool.order('RANDOM()').first
+          person = pool.order(Arel.sql('RANDOM()')).first
 
           if person.present?
             person.attrs['__substitute_for'] = candidate.attrs[id_header.to_s]
