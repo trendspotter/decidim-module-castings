@@ -16,6 +16,7 @@ module Decidim
             patch 'update_selection_criteria'
             post 'start_processing'
             get 'results'
+            post 'duplicate'
           end
         end
         root to: "castings#index"

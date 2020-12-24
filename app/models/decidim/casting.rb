@@ -59,6 +59,10 @@ module Decidim
       created_status? || importing_error_status? || imported_status? || ready_status?
     end
 
+    def destroyable?
+      created_status? || importing_error_status? || imported_status? || ready_status?
+    end
+
     def can_edit_selection_criteria?
       imported_status? || ready_status?
     end

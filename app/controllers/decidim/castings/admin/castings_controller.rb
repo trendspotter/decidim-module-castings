@@ -129,6 +129,36 @@ module Decidim
           end
         end
 
+        def destroy
+          enforce_permission_to :destroy, :casting
+
+          if casting.destroyable?
+            casting.destroy!
+            flash[:notice] = I18n.t("castings.destroy.success", scope: "decidim.castings.admin")
+          else
+            flash[:alert] = t("action_not_available_in_current_status", scope: "decidim.castings.admin.messages")
+          end
+
+          redirect_to castings_path
+        end
+
+        def duplicate
+          enforce_permission_to :create, :casting
+          @form = form(CastingForm).from_model(casting)
+
+          DuplicateCasting.call(@form, casting) do
+            on(:ok) do |duplicated|
+              flash[:notice] = I18n.t("castings.duplicate.success", scope: "decidim.castings.admin")
+              redirect_to casting_path(duplicated)
+            end
+
+            on(:invalid) do
+              flash.now[:alert] = I18n.t("castings.duplicate.error", scope: "decidim.castings.admin")
+              redirect_to castings_path
+            end
+          end
+        end
+
         private
 
         def castings

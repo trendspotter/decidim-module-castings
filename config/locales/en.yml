@@ -30,12 +30,6 @@ en:
               sum_is_invalid: 'Sum of participants is invalid. Current sum: %{sum}'
 
   decidim:
-    admin:
-      actions:
-        add: Add
-        confirm_destroy: Confirm destroy
-        destroy: Destroy
-        edit: Edit
     castings:
       admin:
         actions:
@@ -43,7 +37,10 @@ en:
           cancel: Cancel
           confirm_duplicate: Are you sure you want to duplicate this casting?
           duplicate: Duplicate
-          edit: Edit casting
+          destroy: Destroy
+          confirm_destroy: Are you sure you want to destroy this casting?
+          edit: Edit
+          edit_casting: Edit casting
           edit_selection_criteria: Edit selection criteria
           confirm_start_processing: It will shedule the background job to process the casting data. Are you sure you want to start processing the casting?
           start_processing: Start processing
@@ -71,9 +68,13 @@ en:
           edit:
             save: Save
             title: Edit casting
-          update:
-            error: Error updating casting.
-            success: Casting successfully updated.
+          destroy:
+            error: Error deleting casting.
+            success: Casting successfully deleted.
+          duplicate:
+            new_name: Copy of %{title}
+            error: Error duplicating casting.
+            success: Casting successfully duplicated.
           menu:
             data_source: Data source
             selection_criteria: Selection criteria

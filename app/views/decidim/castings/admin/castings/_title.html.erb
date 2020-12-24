@@ -13,7 +13,7 @@
         <% end %>
 
         <% if @casting.editable? && local_assigns[:form].blank? %>
-          <%= link_to t("actions.edit", scope: "decidim.castings.admin"), edit_casting_path(@casting), class: "button hollow tiny button--simple" %>
+          <%= link_to t("actions.edit_casting", scope: "decidim.castings.admin"), edit_casting_path(@casting), class: "button hollow tiny button--simple" %>
         <% end %>
 
         <% if @casting.can_edit_selection_criteria? %>

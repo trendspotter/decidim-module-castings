@@ -46,15 +46,15 @@
                 <% end %>
 
                 <% if allowed_to?(:update, :casting, casting: casting) && casting.editable? %>
-                  <%= icon_link_to "pencil", edit_casting_path(casting), t("actions.configure", scope: "decidim.admin"), class: "action-icon--new" %>
+                  <%= icon_link_to "pencil", edit_casting_path(casting), t("actions.edit", scope: "decidim.castings.admin"), class: "action-icon--new" %>
                 <% end %>
 
-                <%# if allowed_to? :create, :casting %>
-                <%#= icon_link_to "fork", duplicate_casting_path(casting), t("actions.duplicate", scope: "decidim.castings.admin"), method: :post, class: "action-icon--new", data: {confirm: t("actions.confirm_duplicate", scope: "decidim.castings.admin") } %>
-                <%# end %>
+                <% if allowed_to? :create, :casting %>
+                  <%= icon_link_to "fork", duplicate_casting_path(casting), t("actions.duplicate", scope: "decidim.castings.admin"), method: :post, class: "action-icon--new", data: {confirm: t("actions.confirm_duplicate", scope: "decidim.castings.admin")} %>
+                <% end %>
 
-                <% if allowed_to? :destroy, :casting, casting: casting %>
-                  <%= icon_link_to "circle-x", casting_path(casting), t("actions.destroy", scope: "decidim.admin"), method: :delete, class: "action-icon--remove", data: {confirm: t("actions.confirm_destroy", scope: "decidim.admin")} %>
+                <% if allowed_to?(:destroy, :casting, casting: casting) && casting.destroyable? %>
+                  <%= icon_link_to "circle-x", casting_path(casting), t("actions.destroy", scope: "decidim.castings.admin"), method: :delete, class: "action-icon--remove", data: {confirm: t("actions.confirm_destroy", scope: "decidim.castings.admin")} %>
                 <% end %>
               </td>
             </tr>
