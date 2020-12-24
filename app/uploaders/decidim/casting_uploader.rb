@@ -16,13 +16,13 @@ module Decidim
     # type fo the temp file to match against any of these options.
     def content_type_whitelist
       [
-        %r{text\/csv},
-        %r{text\/x-csv},
-        %r{text\/comma-separated-values},
-        %r{text\/x-comma-separated-values},
-        %r{application\/vnd.ms-excel},
-        %r{application\/csv},
-        %r{application\/x-csv},
+        "text/csv",
+        "text/x-csv",
+        "text/comma-separated-values",
+        "text/x-comma-separated-values",
+        "application/vnd.ms-excel",
+        "application/csv",
+        "application/x-csv",
       ]
     end
 

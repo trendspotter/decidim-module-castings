@@ -23,7 +23,7 @@ module Decidim
         validates :file, presence: true, unless: :persisted?
         validates :file,
                   file_size: {less_than_or_equal_to: ->(_r) {Decidim.maximum_attachment_size}},
-                  file_content_type: {allow: ["text/csv"]}
+                  file_content_type: {allow: Decidim::CastingUploader.new.send(:content_type_whitelist)}
 
         protected
 
