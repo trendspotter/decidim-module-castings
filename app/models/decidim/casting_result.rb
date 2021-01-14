@@ -31,7 +31,7 @@ module Decidim
     end
 
     def self.best_result
-      casting_results.order(Arel.sql("statistics ->> 'total_candidates' DESC")).first
+      order(Arel.sql("statistics ->> 'total_candidates' DESC")).first
     end
 
     def self.max_run_number
