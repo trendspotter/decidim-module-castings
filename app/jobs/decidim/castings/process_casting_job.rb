@@ -6,6 +6,8 @@ module Decidim
     class ProcessCastingJob < ApplicationJob
       queue_as :default
 
+      MAX_TRIALS = 10_000
+
       def perform(casting_id, force = false)
         casting = Decidim::Casting.find(casting_id)
 
@@ -14,17 +16,20 @@ module Decidim
         casting.update_columns(status: Decidim::Casting.statuses[:processing], status_errors: nil)
 
         begin
-          run_number = (casting.casting_results.maximum(:run_number) || 0) + 1
           result = casting.casting_results.create!(
-            run_number: run_number,
             number_of_trials: 0,
             statistics: {}
           )
+          last_run_number = casting.max_run_number
 
           Decidim::Castings::CreateCastingDataRowsJob.perform_now(casting.id)
 
-          Decidim::Castings::CommitteeComposition.new(result).call
-
+          MAX_TRIALS.times do |times|
+            run_number = last_run_number + 1
+            result.update(run_number: run_number)
+            Decidim::Castings::CommitteeComposition.new(result).call
+            break if result.is_expected_result?
+          end
           casting.processed_status!
 
           casting.casting_data_rows.delete_all

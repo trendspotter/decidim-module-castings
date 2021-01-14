@@ -119,10 +119,10 @@ module Decidim
         def results
           enforce_permission_to :read, :casting
           if casting.processed_status?
-            @result = casting.find_result_by_run_number(params[:run]) || casting.latest_result
+            @result = casting.find_result_by_run_number(params[:run]) || casting.best_result
             render :results_processed
           elsif casting.processing_scheduled_status? || casting.processing_status? || casting.processing_error_status?
-            @result = casting.latest_result
+            @result = casting.best_result
             render :results_processing
           else
             render :results_not_started

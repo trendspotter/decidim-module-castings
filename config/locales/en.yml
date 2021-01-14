@@ -113,10 +113,13 @@ en:
             no_results_title: No results were found for the selection criteria
             runs: Runs
             run_title: "#%{run_number} - %{total_candidates} participants, %{total_substitutes} substitutes"
-            number_of_trials: Number of trials
+            number_of_runs: Number of runs
             candidates_file_name: Candidates file
             substitutes_file_name: Substitutes file
             selected_participants: Selected participants
+            wanted_participants: Wanted participants
+            participants_without_substitutes: Participants without substitutes
+
             download: Download
 
         models:

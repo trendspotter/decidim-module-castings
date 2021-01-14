@@ -34,6 +34,7 @@ module Decidim
              foreign_key: "decidim_casting_id",
              class_name: "Decidim::CastingResult",
              dependent: :destroy
+    delegate :max_run_number, :best_result, to: :casting_results
 
     validates :file, :file_content_type, presence: true
     validates :file, file_size: {less_than_or_equal_to: ->(_attachment) {Decidim.maximum_attachment_size}}
@@ -43,9 +44,6 @@ module Decidim
 
     delegate :url, to: :file
 
-    def latest_result
-      casting_results.order(:run_number).last
-    end
 
     def find_result_by_run_number(run_number)
       casting_results.where(run_number: run_number).first
@@ -68,8 +66,10 @@ module Decidim
     end
 
     def can_start_processing?
-      ready_status? || processed_status?
+      ready_status?
     end
+
+
 
   end
 end

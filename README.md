@@ -9,7 +9,7 @@ A [Decidim](https://github.com/decidim/decidim) module to cast a committee compo
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "decidim-term_customizer"
+gem "decidim-castings"
 ```
 
 And then execute:
