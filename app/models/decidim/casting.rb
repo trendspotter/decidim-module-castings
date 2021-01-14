@@ -34,6 +34,7 @@ module Decidim
              foreign_key: "decidim_casting_id",
              class_name: "Decidim::CastingResult",
              dependent: :destroy
+    delegate :max_run_number, :best_result, to: :casting_results
 
     validates :file, :file_content_type, presence: true
     validates :file, file_size: {less_than_or_equal_to: ->(_attachment) {Decidim.maximum_attachment_size}}
@@ -68,13 +69,7 @@ module Decidim
       ready_status?
     end
 
-    def best_result
-      casting_results.order(Arel.sql("statistics ->> 'total_candidates' DESC")).first
-    end
 
-    def max_run_number
-      casting_results.maximum(:run_number) || 0
-    end
 
   end
 end
