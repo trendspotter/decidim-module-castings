@@ -43,9 +43,6 @@ module Decidim
 
     delegate :url, to: :file
 
-    def latest_result
-      casting_results.order(:run_number).last
-    end
 
     def find_result_by_run_number(run_number)
       casting_results.where(run_number: run_number).first
@@ -71,6 +68,13 @@ module Decidim
       ready_status?
     end
 
+    def best_result
+      casting_results.order(Arel.sql("statistics ->> 'total_candidates' DESC")).first
+    end
+
+    def max_run_number
+      casting_results.maximum(:run_number) || 0
+    end
 
   end
 end

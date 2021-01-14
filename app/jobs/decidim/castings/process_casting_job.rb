@@ -20,7 +20,7 @@ module Decidim
             number_of_trials: 0,
             statistics: {}
           )
-          last_run_number = (casting.casting_results.maximum(:run_number) || 0)
+          last_run_number = casting.max_run_number
 
           Decidim::Castings::CreateCastingDataRowsJob.perform_now(casting.id)
 

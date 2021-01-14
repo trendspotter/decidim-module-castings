@@ -21,9 +21,6 @@ module Decidim
       statistics&.dig('total_substitutes').to_i
     end
 
-    def self.best_result
-      order(Arel.sql("statistics ->> 'total_candidates' DESC")).first
-    end
 
     def candidates_without_substitutes
       casting.amount_of_candidates - statistics.dig('total_candidates')
