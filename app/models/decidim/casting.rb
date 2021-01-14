@@ -68,8 +68,9 @@ module Decidim
     end
 
     def can_start_processing?
-      ready_status? || processed_status?
+      ready_status?
     end
+
 
   end
 end

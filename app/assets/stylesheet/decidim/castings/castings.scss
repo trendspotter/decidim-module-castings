@@ -10,13 +10,29 @@ $primary-color: #039be5;
   .with-border {
     border: 2px solid $primary-color;
   }
-
   .total-participants-badge {
     background-color: $primary-color;
     float: right;
     height: 116px;
     width: 116px;
   }
+  .results{
+    .total-participants-badge {
+      background-color: $primary-color;
+      float: right;
+      height: 145px;
+      width: 416px;
+      
+      .margin-y-auto{
+        margin: auto 0;
+      }
+  
+      .bolder{
+        font-weight: bolder;
+      }
+    }
+  }
+
 
   .selection-criteria-list {
     max-height: 550px;

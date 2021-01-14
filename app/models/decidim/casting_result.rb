@@ -6,7 +6,6 @@ module Decidim
     belongs_to :casting,
                foreign_key: "decidim_casting_id",
                class_name: "Decidim::Casting"
-
     mount_uploader :candidates_file, Decidim::CastingResultFileUploader
     mount_uploader :substitutes_file, Decidim::CastingResultFileUploader
 
@@ -20,6 +19,18 @@ module Decidim
 
     def total_substitutes
       statistics&.dig('total_substitutes').to_i
+    end
+
+    def self.best_result
+      order(Arel.sql("statistics ->> 'total_candidates' DESC")).first
+    end
+
+    def candidates_without_substitutes
+      casting.amount_of_candidates - statistics.dig('total_candidates')
+    end
+
+    def is_expected_result?
+      total_candidates == casting.amount_of_candidates
     end
 
   end
