@@ -51,13 +51,38 @@
     </div>
 
     <% if @result.has_results? %>
-      <div class="row column">
-        <div class="grid-x grid-margin-x data-statistic-charts">
-          <% charts_data_presenter.result_statistics(@result).each do |chart_data| %>
-            <p class="cell small-6 with-border">
-              <%= render partial: "result_statistics_chart", locals: {data: chart_data} %>
-            </p>
-          <% end %>
+      <div>
+        <ul class="tabs" data-tabs id="charts">
+          <li class="tabs-title is-active">
+            <a href="#results_vs_data_source" data-tabs-target="results_vs_data_source">
+              <%= t(".results_vs_data_source") %>
+            </a></li>
+          <li class="tabs-title">
+            <a href="#results_vs_selection_criteria" data-tabs-target="results_vs_selection_criteria">
+              <%= t(".results_vs_selection_criteria") %>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tabs-content" data-tabs-content="charts">
+        <div id="results_vs_data_source" class="tabs-panel row column is-active">
+          <div class="grid-x grid-margin-x data-statistic-charts">
+            <% charts_data_presenter.result_statistics(@result).each do |chart_data| %>
+              <p class="cell small-6 with-border">
+                <%= render partial: "result_statistics_chart", locals: {data: chart_data} %>
+              </p>
+            <% end %>
+          </div>
+        </div>
+        <div id="results_vs_selection_criteria" class="tabs-panel row column">
+          <div class="grid-x grid-margin-x data-statistic-charts">
+            <% charts_data_presenter.result_criterion_statistics(@result).each do |chart_data| %>
+              <p class="cell small-6 with-border">
+                <%= render partial: "result_to_criteria_statistics_chart", locals: {data: chart_data} %>
+              </p>
+            <% end %>
+          </div>
         </div>
       </div>
     <% else %>

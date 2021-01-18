@@ -27,11 +27,11 @@ module Decidim
     end
 
     def is_expected_result?
-      total_candidates == casting.amount_of_candidates
+      total_candidates == casting.amount_of_candidates && total_substitutes == casting.amount_of_candidates
     end
 
     def self.best_result
-      order(Arel.sql("statistics ->> 'total_candidates' DESC")).first
+      order(Arel.sql("statistics ->> 'total_candidates' DESC, statistics ->> 'total_substitutes' DESC")).first
     end
 
     def self.max_run_number
