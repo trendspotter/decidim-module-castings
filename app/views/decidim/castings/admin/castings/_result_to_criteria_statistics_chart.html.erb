@@ -1,6 +1,6 @@
-<canvas id="<%= data[:attribute] %>" width="" height=""></canvas>
+<canvas id="<%= data[:attribute] %>_to_criteria" width="" height=""></canvas>
 <script>
-  var ctx = document.getElementById("<%= data[:attribute] %>").getContext('2d');
+  var ctx = document.getElementById("<%= data[:attribute] %>_to_criteria").getContext('2d');
   var chart = new Chart(ctx, {
     type: 'horizontalBar',
     data: {
@@ -17,7 +17,7 @@
             align: 'end',
             color: 'black',
             formatter: function (value, context) {
-              return ''.concat(value, '%')
+              return value
             }
           }
         },
@@ -25,13 +25,13 @@
           barPercentage: 0.5,
           minBarThickness: 20,
           label: 'Initial representation',
-          data: <%= raw data[:source_data] %>,
+          data: <%= raw data[:criterion_data] %>,
           datalabels: {
             anchor: 'end',
             align: 'end',
             color: 'black',
             formatter: function (value, context) {
-              return ''.concat(value, '%')
+              return value
             }
           }
         }
