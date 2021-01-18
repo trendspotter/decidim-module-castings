@@ -119,7 +119,8 @@ en:
             selected_participants: Selected participants
             wanted_participants: Wanted participants
             participants_without_substitutes: Participants without substitutes
-
+            results_vs_data_source: Results vs. Data Source
+            results_vs_selection_criteria: Results vs. Selection Criteria
             download: Download
 
         models:
