@@ -16,7 +16,7 @@
           color: 'black',
           formatter: function (value, context) {
             const total = context.dataset.data.reduce((a, b) => a + b, 0);
-            const percent = total > 0 ? parseFloat(value / total * 100).toFixed() : 0;
+            const percent = total > 0 ? parseFloat(value / total * 100).toFixed(2) : 0;
             return ''.concat(value, ' (', percent, '%)')
           }
         }
