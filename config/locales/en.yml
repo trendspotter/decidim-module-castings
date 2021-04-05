@@ -98,6 +98,8 @@ en:
           edit_selection_criteria:
             title: Selection criteria
             description_html: List of the criteria used to compute the needed representation. For each attribute the sum of participants must be <b>%{amount_of_candidates}</b>.
+            participants_left_hint: participant(s) left
+            excess_participants_hint: excess participant(s)
             index_title: Criteria index
           start_processing:
             error: Error starting the casting processing. %{message}

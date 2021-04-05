@@ -14,17 +14,23 @@
               <% (f.object.selection_criteria || {}).each do |key, value| %>
                 <% error = (@form.errors.details[:base] || []).find {|e| e[:key] == "selection_criteria_#{key}"} %>
 
-                <div id="<%= key %>" class="card with-border">
+                <div id="selection-criteria-<%= key %>" class="card with-border">
                   <div class="card-section">
                     <div class="row column">
                       <h2 class="<%= error.present? ? "is-invalid-label" : "" %>">
                         <%= key %>
+                        <small class="participants-left-hint" hidden>
+                          &mdash; <b class="amount-left"><%= @casting.amount_of_candidates %></b> <%= t(".participants_left_hint") %>
+                        </small>
+                        <small class="excess-participants-hint" hidden>
+                          &mdash; <b class="excess-amount">0</b> <%= t(".excess_participants_hint") %>
+                        </small>
                       </h2>
                       <% if error.present? %>
                         <span class="criteria-error form-error is-visible" role="alert"><%= error[:error] %></span>
                       <% end %>
 
-                      <div class="grid-x grid-margin-x">
+                      <div id="selection-criteria-<%= key %>-values" class="grid-x grid-margin-x">
                         <% value.each do |k, v| %>
                           <% e = (@form.errors.details[:base] || []).find {|e| e[:key] == "selection_criteria_#{key}_#{k}"} %>
 
@@ -32,7 +38,10 @@
                             <%= label_tag "selection_criteria_#{key}_#{k}", k, class: e.present? ? "is-invalid-label" : "" %>
                           </div>
                           <div class="cell small-10">
-                            <%= number_field_tag "selection_criteria[#{key}][#{k}]", v, id: "selection_criteria_#{key}_#{k}", min: 0 %>
+                            <%= number_field_tag "selection_criteria[#{key}][#{k}]", v, id: "selection_criteria_#{key}_#{k}",
+                                                 min: 0, max: @casting.amount_of_candidates,
+                                                 "data-key": key
+                            %>
                             <% if e.present? %>
                               <span class="form-error is-visible" role="alert"><%= e[:error] %></span>
                             <% end %>
@@ -64,3 +73,5 @@
 
   <% end %>
 </div>
+
+<%= javascript_include_tag "decidim/castings/edit_selection_criteria" %>
