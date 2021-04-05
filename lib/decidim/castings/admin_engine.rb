@@ -40,12 +40,14 @@ module Decidim
 
       initializer "decidim_castings.admin_menu" do
         Decidim.menu :admin_menu do |menu|
-          menu.item I18n.t("menu.castings", scope: "decidim.castings"),
-                    decidim_admin_castings.castings_path,
-                    icon_name: "people",
-                    position: 7.1,
-                    active: :inclusive,
-                    if: allowed_to?(:update, :organization, organization: current_organization)
+          if current_organization.castings_enabled?
+            menu.item I18n.t("menu.castings", scope: "decidim.castings"),
+                      decidim_admin_castings.castings_path,
+                      icon_name: "people",
+                      position: 7.1,
+                      active: :inclusive,
+                      if: allowed_to?(:update, :organization, organization: current_organization)
+          end
         end
       end
 
