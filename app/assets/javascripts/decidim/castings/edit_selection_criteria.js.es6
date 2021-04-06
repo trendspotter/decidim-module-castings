@@ -8,7 +8,7 @@
 
     let sum = 0;
     const inputs = $(e.currentTarget).closest(`#selection-criteria-${e.currentTarget.dataset["key"]}-values`).find("input[type=number]");
-    inputs.each((index, el) => sum += parseInt(el.value));
+    inputs.each((index, el) => sum += (parseInt(el.value) || 0));
 
     if (sum < e.currentTarget.max) {
       amount_left_hint.find(".amount-left").text(e.currentTarget.max - sum);
