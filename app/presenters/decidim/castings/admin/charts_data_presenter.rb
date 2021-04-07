@@ -32,7 +32,7 @@ module Decidim
             sd_total = sd.inject(0, :+)
             rd_total = rd.inject(0, :+)
             sd_percentages = values.keys.map { |k| ((casting.data_source_statistics.dig('attributes', attr, k) * 100).to_f / sd_total).round(2) }
-            rd_percentages = values.keys.map { |k| ((result.statistics.dig('candidates_attributes', attr, k) * 100).to_f / rd_total).round(2) }
+            rd_percentages = values.keys.map { |k| (((result.statistics.dig('candidates_attributes', attr, k) || 0) * 100).to_f / rd_total).round(2) }
 
             data << {
               attribute: attr,
