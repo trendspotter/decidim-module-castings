@@ -7,6 +7,7 @@ DECIDIM_VERSION = '0.22.0'
 
 gem "decidim", DECIDIM_VERSION
 gem "decidim-castings", path: "."
+gem "caxlsx"
 
 gem "bootsnap"
 gem "puma", ">= 4.3.3"

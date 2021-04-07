@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require 'tempfile'
+require 'axlsx'
 
 module Decidim
   module Castings
@@ -127,21 +128,28 @@ module Decidim
         headers = casting_file_headers
         headers << 'candidate ID' if attr == :substitutes
 
-        Tempfile.create(["casting_#{@casting.id}_run_#{@result.run_number}_#{attr}-", ".csv"]) do |f|
-          f << headers.join(",") + "\n"
-
-          rows.each do |person|
-            if attr == :substitutes
-              row = person.raw_data.chomp
-              row += ",#{person.attrs['__substitute_for']}\n"
-            else
-              row = person.raw_data
-              row += "\n" unless row.ends_with?("\n")
-            end
-
-            f << row
+        package = Axlsx::Package.new
+        workbook = package.workbook
+        workbook.add_worksheet(name: "#{attr.to_s.camelize}") do |sheet|
+          sheet.sheet_protection do |protection|
+            protection.password = SecureRandom.hex(2048)
+            protection.auto_filter = false
           end
 
+          sheet.add_row headers
+          rows.each do |person|
+            if attr == :substitutes
+              row = person.raw_data.chomp.split(@casting.file_columns_separator)
+              row << person.attrs['__substitute_for']
+              sheet.add_row row
+            else
+              sheet.add_row person.raw_data.chomp.split(@casting.file_columns_separator)
+            end
+          end
+        end
+
+        Tempfile.create(["casting_#{@casting.id}_run_#{@result.run_number}_#{attr}-", ".xlsx"]) do |f|
+          f.write(package.to_stream.read)
           f.flush
           @result.send("#{attr}_file=", f)
           @result.save!

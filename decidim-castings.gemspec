@@ -22,4 +22,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "decidim-core", Decidim::Castings.version
   s.add_dependency "decidim-admin", Decidim::Castings.version
+  s.add_dependency "caxlsx"
+
 end
