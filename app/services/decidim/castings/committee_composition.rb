@@ -39,9 +39,10 @@ module Decidim
       def find_candidates
         @criteria = @casting.selection_criteria.deep_dup
 
+        number_of_trials = 0
         for i in 1..@casting.amount_of_candidates do
           _get_constraints.each do |cc|
-            @result.update_column(:number_of_trials, @result.number_of_trials + 1)
+            number_of_trials += 1
 
             pool = @data_rows.where.not(id: @candidates.map(&:id))
 
@@ -66,6 +67,7 @@ module Decidim
             end
           end
         end
+        @result.update_column(:number_of_trials, number_of_trials)
       end
 
       def _get_constraints

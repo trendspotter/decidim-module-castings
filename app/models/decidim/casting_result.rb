@@ -35,7 +35,7 @@ module Decidim
     end
 
     def self.best_result
-      where.not(statistics: {}).order(Arel.sql("statistics ->> 'total_candidates' DESC, statistics ->> 'total_substitutes' DESC")).first
+      where.not(statistics: {}).order(Arel.sql("statistics ->> 'total_candidates' DESC, statistics ->> 'total_substitutes' DESC, run_number ASC")).first
     end
 
     def self.max_run_number
