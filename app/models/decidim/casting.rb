@@ -45,10 +45,6 @@ module Decidim
     delegate :url, to: :file
 
 
-    def find_result_by_run_number(run_number)
-      casting_results.where(run_number: run_number).first
-    end
-
     def file_type
       file.url&.split(".")&.last&.downcase
     end

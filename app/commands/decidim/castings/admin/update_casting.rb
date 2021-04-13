@@ -16,7 +16,7 @@ module Decidim
           if casting.valid?
             casting.save!
             if casting.file_data_source?
-              Decidim::Castings::ImportFileDataSourceJob.perform_later(casting.id)
+              Decidim::Castings::ImportFileDataSourceJob.perform_now(casting.id)
             end
 
             broadcast(:ok, casting)

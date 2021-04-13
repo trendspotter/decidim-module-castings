@@ -1,0 +1,50 @@
+<div id="results-processing-status-tracker"
+     data-casting_id="<%= @casting.id %>"
+     data-is_processing_scheduled_status="<%= @casting.processing_scheduled_status? %>"
+>
+  <% t_scope = "decidim.castings.admin.castings.results_processing" %>
+
+  <div class="card-section">
+    <div class="row column text-center">
+      <h2 id="processing_scheduled_title" <%= 'hidden' unless @casting.processing_scheduled_status? %>>
+        <%= t("processing_scheduled_title", scope: t_scope) %>
+      </h2>
+      <h2 id="preparing_data_title" <%= 'hidden' unless @casting.processing_status? && @casting.max_run_number == 0 %>>
+        <%= t("preparing_data_title", scope: t_scope) %>
+      </h2>
+      <h2 id="processing_title" <%= 'hidden' unless @casting.processing_status? && @casting.max_run_number > 0 %>>
+        <%= t("title", scope: t_scope) %>
+      </h2>
+      <h3 id="processing_run" <%= 'hidden' unless @casting.processing_status? && @casting.max_run_number > 0 %>>
+        <%= t("processing_run_number", scope: t_scope) %>:
+        <b id="processing_run_number"><%= @casting.max_run_number %></b>
+        <small> / 10 000 max</small>
+      </h3>
+      <%= image_tag("decidim/castings/data_processing.svg", alt: "Processing Data") %>
+    </div>
+  </div>
+
+  <div class="card-section">
+    <div class="row column text-center">
+      <h3>
+        <%= t("best_result", scope: t_scope) %>
+      </h3>
+      <h3>
+        <%= t("run_number", scope: t_scope) %>:
+        <b id="run_number"><%= @casting.best_result&.run_number || '-' %></b>
+      </h3>
+      <h3>
+        <%= t("participants_found", scope: t_scope) %>:
+        <b id="participants_found"><%= @casting.best_result&.total_candidates || '-' %></b>
+        <small> / <%= @casting.amount_of_candidates %></small>
+      </h3>
+      <h3>
+        <%= t("substitutes_found", scope: t_scope) %>:
+        <b id="substitutes_found"><%= @casting.best_result&.total_substitutes || '-' %></b>
+        <small> / <%= @casting.amount_of_candidates %></small>
+      </h3>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag "decidim/castings/results_processing_status_tracker" %>

@@ -116,13 +116,23 @@ module Decidim
           end
         end
 
+        def results_processing_status
+          enforce_permission_to :read, :casting
+          render json: {
+            status: :success,
+            casting: casting.as_json(
+              only: [:id, :status, :amount_of_candidates],
+              methods: [:best_result, :max_run_number]
+            )
+          }
+        end
+
         def results
           enforce_permission_to :read, :casting
           if casting.processed_status?
-            @result = casting.find_result_by_run_number(params[:run]) || casting.best_result
+            @result = casting.best_result
             render :results_processed
           elsif casting.processing_scheduled_status? || casting.processing_status? || casting.processing_error_status?
-            @result = casting.best_result
             render :results_processing
           else
             render :results_not_started

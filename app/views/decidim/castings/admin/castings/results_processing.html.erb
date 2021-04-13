@@ -5,16 +5,7 @@
   <% if @casting.processing_error_status? %>
     <%= render partial: "status_errors", locals: {title: t(".error_title")} %>
   <% else %>
-    <div class="card-section">
-      <div class="row column text-center">
-        <h2>
-          <%= t(".title") %>
-        </h2>
-        <%= image_tag("decidim/castings/data_processing.svg", alt: "Processing Data") %>
-      </div>
-    </div>
-
-    <%= render partial: "page_refresh_counter" %>
+    <%= render partial: "results_processing_status_tracker" %>
   <% end %>
 
 </div>

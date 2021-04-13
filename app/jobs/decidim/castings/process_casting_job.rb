@@ -15,30 +15,24 @@ module Decidim
 
         casting.update_columns(status: Decidim::Casting.statuses[:processing], status_errors: nil)
 
-        begin
+        casting.casting_results.destroy_all
+        Decidim::Castings::CreateCastingDataRowsJob.perform_now(casting.id)
 
-          run_number = casting.max_run_number
-
-          Decidim::Castings::CreateCastingDataRowsJob.perform_now(casting.id)
-
-          MAX_TRIALS.times do |times|
-            run_number += 1
-
-            result = casting.casting_results.create!(
-              run_number: run_number,
-              number_of_trials: 0,
-              statistics: {}
-            )
-            Decidim::Castings::CommitteeComposition.new(result).call
-            break if result.is_expected_result?
-          end
-          casting.processed_status!
-
-          casting.casting_data_rows.delete_all
-
-        rescue Exception => e
-          set_error(casting, [e.message])
+        MAX_TRIALS.times do |run_number|
+          result = casting.casting_results.create!(
+            run_number: run_number + 1,
+            number_of_trials: 0,
+            statistics: {}
+          )
+          Decidim::Castings::CommitteeComposition.new(result).call
+          break if result.is_expected_result?
         end
+        casting.processed_status!
+
+      rescue Exception => e
+        set_error(casting, [e.message])
+      ensure
+        casting.casting_data_rows.delete_all
       end
 
       private

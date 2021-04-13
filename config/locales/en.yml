@@ -107,8 +107,14 @@ en:
           results_not_started:
             title: No computations are running. Ensure the selection criteria are filled in to launch the randomisation toss.
           results_processing:
-            title: We're currently processing the casting data to find results.
-            trial_number: Trial number
+            title: We're currently processing the casting data to find results
+            processing_scheduled_title: Waiting for the job to start processing the casting data...
+            preparing_data_title: Preparing data...
+            processing_run_number: Processing run
+            run_number: Run
+            best_result: Best result
+            participants_found: Participants found
+            substitutes_found: Substitutes found
             error_title: Data processing failed, please check error(s) below.
           results_processed:
             title: Casting results
@@ -134,9 +140,6 @@ en:
               created_at: Created At
 
         messages:
-          refresh_page_automatically_html: Page will refresh automatically in <span id="page-refresh-counter" data-seconds="%{seconds}">%{seconds}</span> seconds
-          refresh_page_or: or
-          refresh_page_manually: Do that manually
           action_not_available_in_current_status: This action is not available for a current status of the casting.
 
         titles:

@@ -15,6 +15,7 @@ module Decidim
             get 'edit_selection_criteria'
             patch 'update_selection_criteria'
             post 'start_processing'
+            get 'results_processing_status'
             get 'results'
             post 'duplicate'
           end
