@@ -6,8 +6,6 @@ module Decidim
     class ProcessCastingJob < ApplicationJob
       queue_as :default
 
-      MAX_TRIALS = 10_000
-
       def perform(casting_id, force = false)
         casting = Decidim::Casting.find(casting_id)
 
@@ -18,13 +16,16 @@ module Decidim
         casting.casting_results.destroy_all
         Decidim::Castings::CreateCastingDataRowsJob.perform_now(casting.id)
 
-        MAX_TRIALS.times do |run_number|
+        Casting::MAX_RUNS.times do |run_number|
           result = casting.casting_results.create!(
             run_number: run_number + 1,
             number_of_trials: 0,
             statistics: {}
           )
-          Decidim::Castings::CommitteeComposition.new(result).call
+          service = Decidim::Castings::CommitteeComposition.new(result)
+          service.call
+          service.save_files if result.best_result?
+
           break if result.is_expected_result?
         end
         casting.processed_status!
@@ -32,7 +33,8 @@ module Decidim
       rescue Exception => e
         set_error(casting, [e.message])
       ensure
-        casting.casting_data_rows.delete_all
+        casting.clear_results_except_best_result!
+        casting.clear_data_rows!
       end
 
       private

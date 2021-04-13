@@ -40,7 +40,7 @@ module Decidim
           })
 
           described_class.new(casting_result).call
-          casting.casting_data_rows.delete_all
+          casting.clear_data_rows!
 
           expect(casting_result.statistics).not_to be_blank
           expect(casting_result.statistics['total_candidates']).to eq(5)

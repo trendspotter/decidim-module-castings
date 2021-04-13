@@ -30,6 +30,10 @@ module Decidim
       total_candidates == casting.amount_of_candidates && total_substitutes == casting.amount_of_candidates
     end
 
+    def best_result?
+      self.has_results? && casting.best_result.present? && casting.best_result.id == self.id
+    end
+
     def self.best_result
       where.not(statistics: {}).order(Arel.sql("statistics ->> 'total_candidates' DESC, statistics ->> 'total_substitutes' DESC")).first
     end

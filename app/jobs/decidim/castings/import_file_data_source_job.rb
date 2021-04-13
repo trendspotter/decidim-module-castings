@@ -14,7 +14,8 @@ module Decidim
         casting.update_columns(status: Decidim::Casting.statuses[:importing], status_errors: nil)
 
         begin
-          first_row = CSV.foreach(casting.file.path, headers: true, header_converters: :symbol, col_sep: casting.file_columns_separator).first
+          file = casting.file.file.read
+          first_row = CSV.new(file, headers: true, header_converters: :symbol, col_sep: casting.file_columns_separator).first
           headers = first_row.headers.dup
           id_header = headers.shift
           _ids = {}
@@ -22,7 +23,7 @@ module Decidim
           _selection_criteria = {}
           headers.each {|h| _stats[h] = {}; _selection_criteria[h] = {}}
 
-          CSV.foreach(casting.file.path, headers: true, header_converters: :symbol, col_sep: casting.file_columns_separator).with_index(2) do |row, i|
+          CSV.new(file, headers: true, header_converters: :symbol, col_sep: casting.file_columns_separator).each.with_index(2) do |row, i|
             id = row[id_header]
             errors = []
 

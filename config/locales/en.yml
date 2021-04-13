@@ -65,6 +65,9 @@ en:
           create:
             error: Error creating casting.
             success: Casting successfully created.
+          update:
+            error: Error updating casting.
+            success: Casting successfully updated.
           edit:
             save: Save
             title: Edit casting

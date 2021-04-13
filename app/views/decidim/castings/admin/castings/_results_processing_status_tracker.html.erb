@@ -18,7 +18,7 @@
       <h3 id="processing_run" <%= 'hidden' unless @casting.processing_status? && @casting.max_run_number > 0 %>>
         <%= t("processing_run_number", scope: t_scope) %>:
         <b id="processing_run_number"><%= @casting.max_run_number %></b>
-        <small> / 10 000 max</small>
+        <small> / <%= Decidim::Casting::MAX_RUNS %> max</small>
       </h3>
       <%= image_tag("decidim/castings/data_processing.svg", alt: "Processing Data") %>
     </div>

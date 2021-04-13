@@ -4,6 +4,8 @@ module Decidim
   class Casting < ApplicationRecord
     include Decidim::Authorable
 
+    MAX_RUNS = 1000
+
     enum status: {
       created: 'created',
       importing: 'importing',
@@ -65,7 +67,13 @@ module Decidim
       ready_status?
     end
 
+    def clear_data_rows!
+      casting_data_rows.delete_all
+    end
 
+    def clear_results_except_best_result!
+      casting_results.where.not(id: best_result&.id).destroy_all
+    end
 
   end
 end

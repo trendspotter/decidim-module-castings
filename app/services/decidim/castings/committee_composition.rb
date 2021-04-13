@@ -26,9 +26,12 @@ module Decidim
 
         find_candidates
         find_substitutes
+        save_stats
+      end
+
+      def save_files
         save_candidates_file
         save_substitutes_file
-        save_stats
       end
 
       private
