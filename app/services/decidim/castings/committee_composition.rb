@@ -189,7 +189,7 @@ module Decidim
       end
 
       def casting_file_headers
-        first_row = CSV.foreach(@casting.file.path, headers: true, header_converters: :symbol, col_sep: @casting.file_columns_separator).first
+        first_row = CSV.new(@casting.file.file.read, headers: true, header_converters: :symbol, col_sep: @casting.file_columns_separator).first
         first_row.headers.dup
       end
     end
