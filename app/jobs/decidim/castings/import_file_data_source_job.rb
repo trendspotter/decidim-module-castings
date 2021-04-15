@@ -14,8 +14,8 @@ module Decidim
         casting.update_columns(status: Decidim::Casting.statuses[:importing], status_errors: nil)
 
         begin
-          file = casting.file.file.read
-          first_row = CSV.new(file, headers: true, header_converters: :symbol, col_sep: casting.file_columns_separator).first
+          csv = casting.file_as_csv
+          first_row = csv.first
           headers = first_row.headers.dup
           id_header = headers.shift
           _ids = {}
@@ -23,7 +23,16 @@ module Decidim
           _selection_criteria = {}
           headers.each {|h| _stats[h] = {}; _selection_criteria[h] = {}}
 
-          CSV.new(file, headers: true, header_converters: :symbol, col_sep: casting.file_columns_separator).each.with_index(2) do |row, i|
+          if headers.blank? || _stats.blank?
+            if casting.file_type_csv?
+              set_error(casting, ["File is empty or file columns separator might be wrong for this file"])
+            else
+              set_error(casting, ["File is empty"])
+            end
+            return
+          end
+
+          csv.each.with_index(2) do |row, i|
             id = row[id_header]
             errors = []
 

@@ -45,7 +45,7 @@
                                         disabled: true %>
     </div>
     <div class="row column">
-      <%= form.upload :file, optional: false, accept: ".csv" %>
+      <%= form.upload :file, optional: false, accept: Decidim::CastingUploader.new.send(:extension_whitelist).join(',') %>
     </div>
     <div class="row column">
       <%= form.select :file_columns_separator, Decidim::Casting::CSV_FILE_COLUMNS_SEPARATORS %>

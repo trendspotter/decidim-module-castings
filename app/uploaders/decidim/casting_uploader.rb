@@ -9,20 +9,21 @@ module Decidim
     protected
 
     def extension_whitelist
-      %w(csv)
+      %w(csv xlsx)
     end
 
     # CarrierWave automatically calls this method and validates the content
     # type fo the temp file to match against any of these options.
     def content_type_whitelist
       [
-        "text/csv",
-        "text/x-csv",
-        "text/comma-separated-values",
-        "text/x-comma-separated-values",
-        "application/vnd.ms-excel",
-        "application/csv",
-        "application/x-csv",
+        %r{text\/csv},
+        %r{text\/x-csv},
+        %r{text\/comma-separated-values},
+        %r{text\/x-comma-separated-values},
+        %r{application\/csv},
+        %r{application\/x-csv},
+        %r{application\/vnd.ms-excel},
+        %r{application\/vnd.openxmlformats-officedocument.spreadsheetml},
       ]
     end
 

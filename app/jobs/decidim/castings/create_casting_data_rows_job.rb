@@ -10,7 +10,7 @@ module Decidim
         casting = Decidim::Casting.find(casting_id)
 
         casting.clear_data_rows!
-        CSV.new(casting.file.file.read, headers: true, header_converters: :symbol, col_sep: casting.file_columns_separator).each do |row|
+        casting.file_as_csv.each do |row|
           casting.casting_data_rows.create!(attrs: row.to_h, raw_data: row.to_s)
         end
 

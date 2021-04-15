@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'roo'
 
 module Decidim
   class Casting < ApplicationRecord
@@ -46,9 +47,29 @@ module Decidim
 
     delegate :url, to: :file
 
+    def file_columns_separator
+      file_type_excel? ? ',' : self.attributes['file_columns_separator']
+    end
 
     def file_type
       file.url&.split(".")&.last&.downcase
+    end
+
+    def file_type_csv?
+      file_type == 'csv'
+    end
+
+    def file_type_excel?
+      file_type == 'xlsx'
+    end
+
+    def file_as_csv
+      if file_type_excel?
+        sheet = Roo::Spreadsheet.open(file._storage.name == 'CarrierWave::Storage::Fog' ? file.url : file.path)
+        CSV.new(sheet.to_csv, headers: true, header_converters: :symbol, col_sep: file_columns_separator)
+      else
+        CSV.new(file.file.read, headers: true, header_converters: :symbol, col_sep: file_columns_separator)
+      end
     end
 
     def editable?
