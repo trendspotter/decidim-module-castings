@@ -23,7 +23,7 @@ module Decidim
 
 
     def candidates_without_substitutes
-      casting.amount_of_candidates - statistics.dig('total_candidates')
+      total_candidates - total_substitutes
     end
 
     def is_expected_result?
