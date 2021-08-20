@@ -8,7 +8,7 @@ module Castings
 
     included do
 
-      attribute :castings_enabled, Virtus::Attribute::Boolean
+      attribute :module_castings_enabled, Virtus::Attribute::Boolean
 
     end
   end

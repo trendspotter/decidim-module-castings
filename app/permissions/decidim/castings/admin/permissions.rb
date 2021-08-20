@@ -9,7 +9,7 @@ module Decidim
           return permission_action unless permission_action.scope == :admin
 
           if permission_action.subject == :casting
-            if permission_action.scope == :admin && user.admin? && user.organization.castings_enabled?
+            if permission_action.scope == :admin && user.admin? && user.organization.module_castings_enabled?
               allow!
             else
               disallow!

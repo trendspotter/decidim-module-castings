@@ -41,7 +41,7 @@ module Decidim
 
       initializer "decidim_castings.admin_menu" do
         Decidim.menu :admin_menu do |menu|
-          if current_organization.castings_enabled?
+          if current_organization.module_castings_enabled?
             menu.item I18n.t("menu.castings", scope: "decidim.castings"),
                       decidim_admin_castings.castings_path,
                       icon_name: "people",
