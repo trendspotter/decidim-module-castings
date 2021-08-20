@@ -20,7 +20,7 @@ module Castings
         organization.omniauth_settings = form.encrypted_omniauth_settings
         organization.smtp_settings = form.encrypted_smtp_settings
 
-        organization.castings_enabled = form.castings_enabled
+        organization.module_castings_enabled = form.module_castings_enabled
 
         organization.save!
       end
