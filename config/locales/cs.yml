@@ -1,0 +1,143 @@
+---
+cs:
+  activemodel:
+    attributes:
+      casting:
+        statuses:
+          created: Vytvořeno
+          importing: Importování
+          importing_error: Chyba Importu
+          imported: Importováno
+          ready: Připraveno ke zpracování
+          processing_scheduled: Zpracování je naplánováno
+          processing: Zpracování
+          processing_error: Chyba zpracování
+          processed: Zpracováno
+        data_sources:
+          file: Nahrání souboru
+          database: Uživatelé v databázi
+    errors:
+      models:
+        casting:
+          attributes:
+            amount_of_candidates:
+              invalid: 'neplatná hodnota, mělo by být číslo větší než 0'
+            file:
+              invalid_mime_type: 'Neplatný typ souboru. Přijímané formáty jsou: %{valid_mime_types}'
+            selection_criteria:
+              required: musí existovat
+              should_be_positive: mělo by být kladné číslo větší nebo rovné 0
+              sum_is_invalid: 'Součet účastníků je neplatný. Aktuální součet: %{sum}'
+
+  decidim:
+    castings:
+      admin:
+        actions:
+          back: Zpět
+          cancel: Zrušit
+          confirm_duplicate: Opravdu chcete tento casting duplikovat?
+          duplicate: Duplikovat
+          destroy: Zničit
+          confirm_destroy: Opravdu chcete zničit tento casting?
+          edit: Upravit
+          edit_casting: Upravit casting
+          edit_selection_criteria: Upravit výběrová kriteria
+          confirm_start_processing: Naplánuje úlohu na pozadí zpracovat data odesílání. Opravdu chcete zahájit zpracování castingu?
+          start_processing: Spustit zpracování
+          help: Nápověda
+          new_casting: Nový casting
+          refresh_page: Obnovit stranu
+          save: Uložit
+          view: Zobrazit
+
+        castings:
+          index:
+            no_records_html: <p> Nejsou k dispozici žádné castingy. </p> <p> Začněte přidáním castingu pomocí tlačítka „<a href="%{new_casting_link}">%{button_name}</a>“.</p>
+            actions_title: Akce
+          new:
+            create: Vytvořit
+            title: Nový casting
+          form:
+            help_html: <p> Casting je entita, která uchovává údaje o lidech, kritériích a výsledcích hledání složení výboru.</p>
+            help_title: Co je casting?
+            title: Casting
+            data_source_title: Zdroj
+          create:
+            error: Chyba při tvorbě castingu.
+            success: Casting úspěšně vytvořen.
+          edit:
+            save: Uložit
+            title: Upravit casting
+          destroy:
+            error: Chyba mazání castingu.
+            success: Casting úspěšně smazán.
+          duplicate:
+            new_name: Kopie %{title}
+            error: Chyba duplikování castingu.
+            success: Casting úspěšně duplikován.
+          menu:
+            data_source: Zdroj dat
+            selection_criteria: Výběr kritérií
+            results: Výsledky
+          show_importing:
+            title: Aktuálně importujeme data a počítáme jejich statistiky.
+            error_title: Import dat se nezdařil, zkontrolujte prosím chyby níže.
+          show:
+            title: Statistika dat
+            file_name: Původní soubor
+            download: Stáhnout
+            imported_at: Naposledy importováno v
+            participants: Účastníci
+          selection_criteria:
+            title: Kritéria výběru
+            description: Seznam kritérií použitých k výpočtu potřebné reprezentace.
+            index_title: Index kritérií
+            update:
+              error: Při aktualizaci kritérií výběru castingu došlo k chybě.
+              success: Kritéria výběru castingu byla úspěšně aktualizována.
+          edit_selection_criteria:
+            title: Kritéria výběru
+            description_html: Seznam kritérií použitých k výpočtu potřebné reprezentace. Pro každý atribut musí být součet účastníků <b>%{amount_of_candidates}</b>.
+            index_title: Index kritérií
+          start_processing:
+            error: Chyba při zahájení zpracování castingu. %{message}
+            success: Zpracování castingu bylo úspěšně zahájeno.
+          results_not_started:
+            title: Nejsou spuštěny žádné výpočty. Zajistěte vyplnění výběrových kritérií pro spuštění losování.
+          results_processing:
+            title: Aktuálně zpracováváme data odesílání, abychom našli výsledky.
+            trial_number: Zkušební číslo
+            error_title: Zpracování dat selhalo, zkontrolujte prosím chyby níže.
+          results_processed:
+            title: Výsledky castingu
+            no_results_title: Pro kritéria výběru nebyly nalezeny žádné výsledky
+            runs: Probíhá
+            run_title: "#%{run_number} - %{total_candidates} účastníků, %{total_substitutes} nahrazeno"
+            number_of_runs: Počet kol
+            candidates_file_name: Soubor kandidátů
+            substitutes_file_name: Soubr náhradníků
+            selected_participants: Vybraní účastníci
+            wanted_participants: Hledaní účastníci
+            participants_without_substitutes: Účastníci bez náhrady
+            results_vs_data_source: Výsledky vs. zdroj dat
+            results_vs_selection_criteria: Výsledky vs. kritéria výběru
+            download: Stáhnout
+
+        models:
+          castings:
+            fields:
+              title: Název
+              author: Autor
+              status: Stav
+              created_at: Vytvořeno
+
+        messages:
+          refresh_page_automatically_html: Stránka se automaticky obnoví za <span id="page-refresh-counter" data-seconds="%{seconds}">%{seconds}</span> s
+          refresh_page_or: nebo
+          refresh_page_manually: Obnovit ručně
+          action_not_available_in_current_status: Tato akce není k dispozici pro aktuální stav castingu.
+
+        titles:
+          castings: Castingy
+      menu:
+        castings: Složení výboru
